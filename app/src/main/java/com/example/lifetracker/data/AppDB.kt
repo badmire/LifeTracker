@@ -6,10 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 // Database handles TaskTemplate and Record types
-@Database(entities = [TaskTemplate::class,Record::class],version = 1)
+@Database(entities = [TaskTemplate::class,TaskRecord::class],version = 1)
 abstract class AppDB: RoomDatabase() {
     // Initialize Dao objects for calling later
-    abstract fun recordDao(): RecordDao
+    abstract fun recordDao(): TaskRecordDao
     abstract fun taskTemplateDao(): TaskTemplateDao
 
     // Initialize companion object for serving up DB instances
