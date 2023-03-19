@@ -31,7 +31,7 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
         /*
          * Set up RecyclerView.
          */
-        taskListRV = view.findViewById(R.id.rv_forecast_list)
+        taskListRV = view.findViewById(R.id.rv_task_list)
         taskListRV.layoutManager = LinearLayoutManager(requireContext())
         taskListRV.setHasFixedSize(true)
         taskListRV.adapter = taskAdapter

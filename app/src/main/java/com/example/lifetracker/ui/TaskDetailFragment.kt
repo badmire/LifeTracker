@@ -27,9 +27,10 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         view.findViewById<TextView>(R.id.tv_name).text = taskTemplate!!.name
         view.findViewById<TextView>(R.id.tv_icon).text = "Not done!"  // TODO: Fix this, should be based on whether or not total record value is >= db goal
         // TODO: This is just so very wrong...
-        view.findViewById<TextView>(R.id.tv_time_stamp).text = getString(
-            R.string.task_time,
-            openWeatherEpochToDate(forecastPeriod!!.epoch, forecastCity!!.tzOffsetSec)
-        )
+        view.findViewById<TextView>(R.id.tv_time_stamp).text = taskRecord?.stamp.toString()
+        //view.findViewById<TextView>(R.id.tv_time_stamp).text = getString(
+        //    R.string.task_time,
+        //    openWeatherEpochToDate(forecastPeriod!!.epoch, forecastCity!!.tzOffsetSec)
+        //)
     }
 }
