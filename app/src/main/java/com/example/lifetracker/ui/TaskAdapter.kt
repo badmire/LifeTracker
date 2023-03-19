@@ -34,7 +34,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
         holder.bind(this.taskTemplates[position], this.taskRecords[position])
     }
 
-    class ViewHolder(itemView: View, val onClick: (Task) -> Unit)
+    class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)
         : RecyclerView.ViewHolder(itemView) {
         private val nameTV: TextView = itemView.findViewById(R.id.tv_name)
         private val iconTV: TextView = itemView.findViewById(R.id.tv_icon)
