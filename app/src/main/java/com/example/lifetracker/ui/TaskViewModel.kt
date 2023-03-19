@@ -16,8 +16,11 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     private val recordDao: TaskRecordDao = AppDB.getInstance(application).recordDao()
     private val repository = TaskRepository(taskDao=taskDao, recordDao=recordDao)
 
-    private val _task = MutableLiveData<TaskTemplate?>(null)
-    val task: LiveData<TaskTemplate?> = _task
+    private val _taskTemplates = MutableLiveData<TaskTemplate?>(null)
+    val taskTemplates: LiveData<TaskTemplate?> = _taskTemplates
+
+    private val _taskRecords = MutableLiveData<TaskRecord?>(null)
+    val taskRecords: LiveData<TaskRecord?> = _taskRecords
 
     private val _error = MutableLiveData<Throwable?>(null)
     val error: LiveData<Throwable?> = _error
@@ -28,10 +31,12 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     fun loadTasks() {
         viewModelScope.launch {
             _loading.value = true
-            val result = repository.loadTasks()
+            // TODO: Fix this by making it an actual query to an API class
+            //val result = repository.loadTasks()
+            val result = null
             _loading.value = false
-            _error.value = result.exceptionOrNull()
-            _task.value = result.getOrNull()
+            //_error.value = result.exceptionOrNull()
+            //_task.value = result.getOrNull()
         }
     }
 }

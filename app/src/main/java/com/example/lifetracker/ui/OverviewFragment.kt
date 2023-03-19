@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
@@ -36,15 +37,25 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
         taskListRV.adapter = taskAdapter
 
         /*
-         * Set up an observer on the current task data.  If the taskList is not null, display
+         * Set up an observer on the current task data.  If the taskTemplates list is not null, display
          * it in the UI.
          */
-        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
-            if (taskRecords != null) {
-                taskAdapter.updateTasks(taskRecords)
+        viewModel.taskTemplates.observe(viewLifecycleOwner) { taskTemplates ->
+            if (taskTemplates != null) {
+                taskAdapter.updateTaskTemplates(taskTemplates)
                 taskListRV.visibility = View.VISIBLE
                 taskListRV.scrollToPosition(0)
                 // supportActionBar?.title = forecast.city.name
+            }
+        }
+
+        /*
+         * Set up an observer on the most recent task records.  If any member of the taskRecords
+         * list is not null, display it in the UI.
+         */
+        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
+            if (taskRecords != null) {
+                taskAdapter.updateTaskRecords(taskRecords)
             }
         }
 
@@ -98,8 +109,8 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
      * in the list of forecast items.  When a forecast item is clicked, a new activity is launched
      * to view its details.
      */
-    private fun onTaskItemClick(taskTemplate: taskTemplate) {
-        Log.d(TAG, "onTaskItemClick() called, task: $task")
+    private fun onTaskItemClick(taskTemplate: TaskTemplate) {
+        Log.d(TAG, "onTaskItemClick() called, task: $taskTemplate")
         // TODO: Handle navigation
         //val directions = OverviewFragmentDirections.navigateToForecastDetail(forecastPeriod, forecastCity = forecastAdapter.forecastCity!!)
         //findNavController().navigate(directions)

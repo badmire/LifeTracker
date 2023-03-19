@@ -16,8 +16,12 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     var taskTemplates: List<TaskTemplate> = listOf()
     var taskRecords: List<TaskRecord?> = listOf(null)
 
-    fun updateTasks(taskTemplates: List<TaskTemplate>, taskRecords: List<TaskRecord?>) {
+    fun updateTaskTemplates(taskTemplates: List<TaskTemplate>) {
         this.taskTemplates = taskTemplates
+        notifyDataSetChanged()
+    }
+
+    fun updateTaskRecords(taskRecords: List<TaskRecord?>) {
         this.taskRecords = taskRecords
         notifyDataSetChanged()
     }
@@ -67,6 +71,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
             // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
             nameTV.text = taskTemplate.name
+            iconTV.text = "+"
             lastStampTV.text = taskRecord?.stamp.toString()
             //dateTV.text = ctx.getString(R.string.forecast_date, date)
             //timeTV.text = ctx.getString(R.string.forecast_time, date)
