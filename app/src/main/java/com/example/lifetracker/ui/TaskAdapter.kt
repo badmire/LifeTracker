@@ -36,7 +36,6 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
 
     class ViewHolder(itemView: View, val onClick: (Task) -> Unit)
         : RecyclerView.ViewHolder(itemView) {
-        // TODO: Fix these to be what we want them to be, based on the XML
         private val nameTV: TextView = itemView.findViewById(R.id.tv_name)
         private val iconTV: TextView = itemView.findViewById(R.id.tv_icon)
         private val lastStampTV: TextView = itemView.findViewById(R.id.tv_time_stamp)
@@ -65,7 +64,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
              * Figure out the correct temperature and wind units to display for the current
              * setting of the units preference.
              */
-            val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
+            // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
             nameTV.text = taskTemplate.name
             lastStampTV.text = taskRecord?.stamp.toString()
