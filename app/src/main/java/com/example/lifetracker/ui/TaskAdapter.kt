@@ -11,16 +11,18 @@ import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
 
-class TaskAdapter(private val onClick: (List<Task>) -> Unit)
+class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
-    var tasks: List<TaskTemplate> = listOf()
+    var taskTemplates: List<TaskTemplate> = listOf()
+    var taskRecords: List<TaskRecord?> = listOf(null)
 
-    fun updateTasks(tasks: List<Task?>) {
-        tasks = tasks
+    fun updateTasks(taskTemplates: List<TaskTemplate>, taskRecords: List<TaskRecord?>) {
+        this.taskTemplates = taskTemplates
+        this.taskRecords = taskRecords
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = this.tasks.size
+    override fun getItemCount() = this.taskTemplates.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -29,7 +31,7 @@ class TaskAdapter(private val onClick: (List<Task>) -> Unit)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(this.tasks[position])
+        holder.bind(this.taskTemplates[position], this.taskRecords[position])
     }
 
     class ViewHolder(itemView: View, val onClick: (Task) -> Unit)
@@ -41,7 +43,7 @@ class TaskAdapter(private val onClick: (List<Task>) -> Unit)
 
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(itemView.context)
 
-        private lateinit var currentTask: Task
+        private lateinit var currentTaskTemplate: TaskTemplate
 
         /*
          * Set up a click listener on this individual ViewHolder.  Call the provided onClick
@@ -49,12 +51,12 @@ class TaskAdapter(private val onClick: (List<Task>) -> Unit)
          */
         init {
             itemView.setOnClickListener {
-                currentTask.let(onClick)
+                currentTaskTemplate.let(onClick)
             }
         }
 
-        fun bind(task: Task) {
-            currentTask = task
+        fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?) {
+            currentTaskTemplate = taskTemplate
 
             val ctx = itemView.context
             // val date = openWeatherEpochToDate(forecastPeriod.epoch, forecastCity?.tzOffsetSec ?: 0)
@@ -65,26 +67,15 @@ class TaskAdapter(private val onClick: (List<Task>) -> Unit)
              */
             val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
-            dateTV.text = ctx.getString(R.string.forecast_date, date)
-            timeTV.text = ctx.getString(R.string.forecast_time, date)
-            highTempTV.text = ctx.getString(
-                R.string.forecast_temp,
-                forecastPeriod.highTemp,
-                tempUnitsDisplay
-            )
-            lowTempTV.text = ctx.getString(
-                R.string.forecast_temp,
-                forecastPeriod.lowTemp,
-                tempUnitsDisplay
-            )
-            popTV.text = ctx.getString(R.string.forecast_pop, forecastPeriod.pop)
-
-            /*
-             * Load forecast icon into ImageView using Glide: https://bumptech.github.io/glide/
-             */
-            Glide.with(ctx)
-                .load(forecastPeriod.iconUrl)
-                .into(iconIV)
+            nameTV.text = taskTemplate.name
+            lastStampTV.text = taskRecord?.stamp.toString()
+            //dateTV.text = ctx.getString(R.string.forecast_date, date)
+            //timeTV.text = ctx.getString(R.string.forecast_time, date)
+            //highTempTV.text = ctx.getString(
+            //    R.string.forecast_temp,
+            //    forecastPeriod.highTemp,
+            //    tempUnitsDisplay
+            //)
         }
     }
 }

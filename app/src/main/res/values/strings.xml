@@ -1,10 +1,12 @@
 <resources>
+    <!--General strings-->
     <string name="app_name">Life Tracker</string>
+    <string name="loading_error">Unable to fetch task data.  Error message: %1$s</string>
 
-    // Time formatting
+    <!--Time stuff-->
     <string name="task_time">Last: %1$d:%2$d %3$s</string>
 
 
-<!--Nav stuff-->
+    <!--Nav stuff-->
     <string name="label_overview">Overview</string>
 </resources>

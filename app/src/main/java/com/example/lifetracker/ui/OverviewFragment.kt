@@ -39,9 +39,9 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
          * Set up an observer on the current task data.  If the taskList is not null, display
          * it in the UI.
          */
-        viewModel.taskList.observe(viewLifecycleOwner) { taskList ->
-            if (taskList != null) {
-                taskAdapter.updateTasks(taskList)
+        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
+            if (taskRecords != null) {
+                taskAdapter.updateTasks(taskRecords)
                 taskListRV.visibility = View.VISIBLE
                 taskListRV.scrollToPosition(0)
                 // supportActionBar?.title = forecast.city.name
@@ -98,7 +98,7 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
      * in the list of forecast items.  When a forecast item is clicked, a new activity is launched
      * to view its details.
      */
-    private fun onTaskItemClick(task: Task) {
+    private fun onTaskItemClick(taskTemplate: taskTemplate) {
         Log.d(TAG, "onTaskItemClick() called, task: $task")
         // TODO: Handle navigation
         //val directions = OverviewFragmentDirections.navigateToForecastDetail(forecastPeriod, forecastCity = forecastAdapter.forecastCity!!)
