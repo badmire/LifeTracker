@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/overview">
+
+    <fragment
+        android:id="@+id/overview"
+        android:name="com.example.lifetracker.ui.OverviewFragment"
+        android:label="@string/label_overview"
+        >
+        <action
+            android:id="@+id/navigate_to_task"
+            app:destination="@+id/task_detail"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/task_detail"
+        android:name="com.example.lifetracker.ui.TaskDetailFragment"
+        android:label="@string/label_overview"
+        >
+        <argument
+            android:name="task_template"
+            app:argType="com.example.lifetracker.data.TaskTemplate"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.lifetracker.ui.SettingsFragment"
+        android:label="Settings"
+        />
+
+</navigation>

@@ -4,13 +4,19 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.lifetracker.data.TaskTemplate
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.myapplication.R
 import com.google.android.material.navigation.NavigationView
+import androidx.navigation.ui.navigateUp
 
-//TODO: Connect with layouts and nav fragment
+
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var appBarConfig: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController =
             findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfig)
-                || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfig) ||
+                super.onSupportNavigateUp()
     }
 }

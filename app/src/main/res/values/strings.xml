@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
+
+
+<!--Nav stuff-->
+    <string name="label_overview">Overview</string>
 </resources>
