@@ -1,6 +1,10 @@
 package com.example.lifetracker.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -33,4 +37,31 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         //    openWeatherEpochToDate(forecastPeriod!!.epoch, forecastCity!!.tzOffsetSec)
         //)
     }
+
+    /**
+     * This method adds a custom menu to the action bar for this activity.
+     */
+    // TODO: Make this
+    //override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+    //    menuInflater.inflate(R.menu.activity_forecast_detail, menu)
+    //}
+
+    /**
+     * This method is called when the user selects an action from the action bar.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // TODO: Handle settings stuff
+        Log.d("TaskDetailFragment", "Settings functionality should go here...")
+        return super.onOptionsItemSelected(item)
+//        return when (item.itemId) {
+//            R.id.action_share -> {
+//                Log.d("TaskDetailFragment", "Settings functionality not implemented.")
+//                // shareForecastText()
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+    }
+
+    // TODO: Share button functionality?
 }

@@ -23,6 +23,9 @@
         <argument
             android:name="task_template"
             app:argType="com.example.lifetracker.data.TaskTemplate"/>
+        <argument
+            android:name="task_record"
+            app:argType="com.example.lifetracker.data.TaskRecord"/>
     </fragment>
 
     <fragment
