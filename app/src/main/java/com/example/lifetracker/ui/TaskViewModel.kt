@@ -5,18 +5,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.lifetracker.data.AppDB
-import com.example.lifetracker.data.TaskRepository
-import com.example.lifetracker.data.TaskTemplate
-import com.example.lifetracker.data.TaskTemplateDao
+import com.example.lifetracker.data.*
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application): AndroidViewModel(application) {
     /*
      * Instantiate database related stuff.
      */
-    private val dao: TaskTemplateDao = AppDB.getInstance(application).taskDao()
-    private val repository = TaskRepository(dao=dao)
+    private val taskDao: TaskTemplateDao = AppDB.getInstance(application).taskTemplateDao()
+    private val recordDao: TaskRecordDao = AppDB.getInstance(application).recordDao()
+    private val repository = TaskRepository(taskDao=taskDao, recordDao=recordDao)
 
     private val _task = MutableLiveData<TaskTemplate?>(null)
     val task: LiveData<TaskTemplate?> = _task

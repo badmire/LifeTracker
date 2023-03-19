@@ -7,14 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
 
-class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
+class TaskAdapter(private val onClick: (List<Task>) -> Unit)
     : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
     var tasks: List<TaskTemplate> = listOf()
 
-    fun updateTasks(tasks: List<TaskTemplate?>) {
+    fun updateTasks(tasks: List<Task?>) {
         tasks = tasks
         notifyDataSetChanged()
     }
@@ -31,19 +32,16 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
         holder.bind(this.tasks[position])
     }
 
-    class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)
+    class ViewHolder(itemView: View, val onClick: (Task) -> Unit)
         : RecyclerView.ViewHolder(itemView) {
         // TODO: Fix these to be what we want them to be, based on the XML
-        private val dateTV: TextView = itemView.findViewById(R.id.tv_date)
-        private val timeTV: TextView = itemView.findViewById(R.id.tv_time)
-        private val highTempTV: TextView = itemView.findViewById(R.id.tv_high_temp)
-        private val lowTempTV: TextView = itemView.findViewById(R.id.tv_low_temp)
-        private val iconIV: ImageView = itemView.findViewById(R.id.iv_forecast_icon)
-        private val popTV: TextView = itemView.findViewById(R.id.tv_pop)
+        private val nameTV: TextView = itemView.findViewById(R.id.tv_name)
+        private val iconTV: TextView = itemView.findViewById(R.id.tv_icon)
+        private val lastStampTV: TextView = itemView.findViewById(R.id.tv_time_stamp)
 
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(itemView.context)
 
-        private lateinit var currentTasks: List<TaskTemplate?>
+        private lateinit var currentTask: Task
 
         /*
          * Set up a click listener on this individual ViewHolder.  Call the provided onClick
@@ -51,12 +49,12 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
          */
         init {
             itemView.setOnClickListener {
-                currentTasks.let(onClick)
+                currentTask.let(onClick)
             }
         }
 
-        fun bind(tasks: List<TaskTemplate?>) {
-            currentTasks = tasks
+        fun bind(task: Task) {
+            currentTask = task
 
             val ctx = itemView.context
             // val date = openWeatherEpochToDate(forecastPeriod.epoch, forecastCity?.tzOffsetSec ?: 0)
@@ -66,7 +64,6 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
              * setting of the units preference.
              */
             val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
-            val tempUnitsDisplay = getTempUnitsDisplay(units, ctx)
 
             dateTV.text = ctx.getString(R.string.forecast_date, date)
             timeTV.text = ctx.getString(R.string.forecast_time, date)
