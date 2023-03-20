@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         // Feed in layout container for jetbrains
         setContentView(R.layout.activity_main)
 
-        var toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+//        var toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
 
         // Instantiate nav fragment
         val navHostFragment =

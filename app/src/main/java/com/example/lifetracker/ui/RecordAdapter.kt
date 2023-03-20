@@ -3,6 +3,7 @@ package com.example.lifetracker.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskRecord
@@ -33,6 +34,11 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
     class ViewHolder(itemView: View, val onClick: (TaskRecord) -> Unit)
         : RecyclerView.ViewHolder(itemView) {
 
+        //Grab hooks for views
+        private val stampTV: TextView = itemView.findViewById<TextView>(R.id.record_card_stamp)
+        private val valueTV: TextView = itemView.findViewById<TextView>(R.id.record_card_value)
+        private val noteBoolTV: TextView = itemView.findViewById<TextView>(R.id.record_card_note_bool)
+
         // Get preferences incase they are needed
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(itemView.context)
 
@@ -51,6 +57,13 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
             val ctx = itemView.context
 
             //Set values here
+            stampTV.text = currentRecord.stamp.toString()
+            valueTV.text = currentRecord.value.toString()
+            if (currentRecord.note != null) {
+                noteBoolTV.text = "X"
+            } else {
+                noteBoolTV.text = " "
+            }
         }
     }
 }

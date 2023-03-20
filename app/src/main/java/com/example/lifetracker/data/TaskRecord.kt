@@ -6,5 +6,6 @@ import androidx.room.Entity
 data class TaskRecord(
     val stamp: Long,
     val note: String?,
-    val template: String
+    val template: String,
+    val value: Int
 )

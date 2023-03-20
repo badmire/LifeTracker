@@ -61,6 +61,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
         fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?) {
             currentTaskTemplate = taskTemplate
 
+
             val ctx = itemView.context
             // val date = openWeatherEpochToDate(forecastPeriod.epoch, forecastCity?.tzOffsetSec ?: 0)
 

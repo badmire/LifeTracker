@@ -29,4 +29,5 @@ class TaskRepository(
     fun getSpecificRecord(stamp: Int, template: String) = recordDao.getSpecificRecord(stamp,template)
 
     fun getLatestRecord(template_name: String) = recordDao.getLatestRecord(template_name)
+
 }

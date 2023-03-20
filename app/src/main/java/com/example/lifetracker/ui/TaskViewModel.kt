@@ -1,10 +1,7 @@
 package com.example.lifetracker.ui
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.lifetracker.data.*
 import kotlinx.coroutines.launch
 
@@ -27,6 +24,20 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
 
     private val _loading = MutableLiveData<Boolean>(false)
     val loading: LiveData<Boolean> = _loading
+
+    fun getAllRecordsForTask(name: String) : LiveData<List<TaskRecord>> {
+        return this.repository.getAllRecordsForTask(name).asLiveData()
+    }
+
+    fun debugHardcode() {
+        viewModelScope.launch {
+            repository.insertNewTask(TaskTemplate("Drink Water", 1, direction = true, 4))
+            repository.insertNewTask(TaskTemplate("Ped Dogs", 4, direction = true, 4))
+            repository.insertNewTask(TaskTemplate("Get Money", 1, direction = true, 1))
+            repository.insertNewTask(TaskTemplate("Fuck Bitches", 1, direction = true, 69))
+            repository.insertNewTask(TaskTemplate("Mood", 1, direction = true))
+        }
+    }
 
     fun loadTasks() {
         viewModelScope.launch {

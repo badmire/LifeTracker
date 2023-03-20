@@ -43,7 +43,8 @@
     <!--Previous Records-->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/task_detail_record_RV">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
