@@ -37,6 +37,20 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun getAllRecordsForTask(name: String) : LiveData<List<TaskRecord>> {
+        return this.repository.getAllRecordsForTask(name).asLiveData()
+    }
+
+    fun debugHardcode() {
+        viewModelScope.launch {
+            repository.insertNewTask(TaskTemplate("Drink Water", 1, direction = true, 4))
+            repository.insertNewTask(TaskTemplate("Ped Dogs", 4, direction = true, 4))
+            repository.insertNewTask(TaskTemplate("Get Money", 1, direction = true, 1))
+            repository.insertNewTask(TaskTemplate("Fuck Bitches", 1, direction = true, 69))
+            repository.insertNewTask(TaskTemplate("Mood", 1, direction = true))
+        }
+    }
+
     val taskTemplates = repository.getAllTasks().asLiveData()
     val taskRecords = repository.getAllRecords().asLiveData()
 }
