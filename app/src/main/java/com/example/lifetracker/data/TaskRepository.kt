@@ -21,8 +21,10 @@ class TaskRepository(
 
     // Fetcher Functions
     fun getAllTaskTemplates() = taskDao.getAllTasks()
-    fun getAllRecords() = recordDao.getAllTasks()
+    fun getAllRecords(name: String) = recordDao.getAllRecords(name)
 
     fun getTaskTemplateByName(name: String?) = taskDao.getTaskByName(name)
     fun getSpecificRecord(stamp: Int, template: String) = recordDao.getSpecificRecord(stamp,template)
+
+    fun getLatestRecord(template_name: String) = recordDao.getLatestRecord(template_name)
 }
