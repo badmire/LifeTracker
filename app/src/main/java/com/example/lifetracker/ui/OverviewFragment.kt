@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskTemplate
@@ -15,10 +16,14 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 class OverviewFragment : Fragment(R.layout.overview_fragment) {
     private val TAG = "OverviewFragment"
 
+    // ViewModel and adapter containers
     private val viewModel: TaskViewModel by viewModels()
     private val taskAdapter = TaskAdapter(::onTaskItemClick)
 
+    // RecyclerView container
     private lateinit var taskListRV: RecyclerView
+
+    // Containers for UI views
     private lateinit var loadingErrorTV: TextView
     private lateinit var loadingIndicator: CircularProgressIndicator
 
@@ -80,6 +85,8 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
 //                loadingIndicator.visibility = View.INVISIBLE
 //            }
 //        }
+
+//        viewModel.debugHardcode()
     }
 
 //    override fun onResume() {
@@ -107,8 +114,7 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
      */
     private fun onTaskItemClick(taskTemplate: TaskTemplate) {
         Log.d(TAG, "onTaskItemClick() called, task: $taskTemplate")
-        // TODO: Handle navigation
-        //val directions = OverviewFragmentDirections.navigateToForecastDetail(forecastPeriod, forecastCity = forecastAdapter.forecastCity!!)
-        //findNavController().navigate(directions)
+        val directions = OverviewFragmentDirections.navigateToTask(taskTemplate)
+        findNavController().navigate(directions)
     }
 }

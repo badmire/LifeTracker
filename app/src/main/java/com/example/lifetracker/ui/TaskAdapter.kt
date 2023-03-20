@@ -1,5 +1,6 @@
 package com.example.lifetracker.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +27,6 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
         notifyDataSetChanged()
     }
 
-    fun getLatestStamp(task: TaskTemplate) : Unit? {
-
-        return null
-    }
-
     override fun getItemCount() = this.taskTemplates.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +36,8 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(this.taskTemplates[position])
+        Log.d("TaskAdapter : onBindViewHolder","Size of incoming task records: ${this.taskRecords.size}")
         for(record in this.taskRecords) {
             if (record!!.template == this.taskTemplates[position].name) {
                 holder.bind(this.taskTemplates[position], record)
@@ -68,22 +66,21 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
             }
         }
 
-        fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?) {
+        fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?=null) {
             currentTaskTemplate = taskTemplate
 
-
             val ctx = itemView.context
-            // val date = openWeatherEpochToDate(forecastPeriod.epoch, forecastCity?.tzOffsetSec ?: 0)
 
-            /*
-             * Figure out the correct temperature and wind units to display for the current
-             * setting of the units preference.
-             */
             // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
             nameTV.text = taskTemplate.name
             iconTV.text = "+"
-            lastStampTV.text = taskRecord?.stamp.toString()
+            if (taskRecord?.stamp != null) {
+                lastStampTV.text = taskRecord.stamp.toString()
+            }
+
+
+            Log.d("TaskAdapter : Bind","Name: ${taskTemplate.name} Last Stamp: ${taskRecord?.stamp.toString()}")
             //dateTV.text = ctx.getString(R.string.forecast_date, date)
             //timeTV.text = ctx.getString(R.string.forecast_time, date)
             //highTempTV.text = ctx.getString(

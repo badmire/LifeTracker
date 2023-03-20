@@ -48,6 +48,17 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
             repository.insertNewTask(TaskTemplate("Get Money", 1, direction = true, 1))
             repository.insertNewTask(TaskTemplate("Fuck Bitches", 1, direction = true, 69))
             repository.insertNewTask(TaskTemplate("Mood", 1, direction = true))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis(),"Drink Water",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+10,"Drink Water",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+50,"Drink Water",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis(),"Pet Dogs",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+100,"Fuck Bitches",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+200,"Fuck Bitches",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+300,"Fuck Bitches",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+400,"Fuck Bitches",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+500,"Fuck Bitches",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+600,"Fuck Bitches",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+700,"Fuck Bitches",1))
         }
     }
 

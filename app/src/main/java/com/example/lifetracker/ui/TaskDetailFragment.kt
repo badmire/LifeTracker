@@ -21,10 +21,6 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
     // get hooks for passed args
     private val args: TaskDetailFragmentArgs by navArgs()
 
-    // Build holders for incoming data
-    private var taskTemplate: TaskTemplate? = null
-    private var taskRecord: TaskRecord? = null
-
     // Instantiate reference for views from layout
     private lateinit var recordListRV: RecyclerView
 
@@ -36,17 +32,23 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         // Required magic
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("TaskDetailFragment : onViewCreated","view created, ${args.taskName.name}")
+
         // Fetch and configure record recycler view
         recordListRV = view.findViewById(R.id.task_detail_record_RV)
         recordListRV.layoutManager = LinearLayoutManager(requireContext())
         recordListRV.setHasFixedSize(true)
         recordListRV.adapter = recordAdapter
 
+        Log.d("TaskDetailFragment : onViewCreated","Count called from adapter, ${recordAdapter.itemCount}")
+
+
         viewModel.getAllRecordsForTask(args.taskName.name).observe(viewLifecycleOwner) {records ->
-            if (records != null) {
-                recordAdapter.updateTaskRecords(records)
-            }
+            Log.d("TaskDetailFragment : onViewCreated","observer found a thing: ${records.size}")
+            recordAdapter.updateRecords(records)
         }
+
+        view.findViewById<TextView>(R.id.task_detail_title).text = args.taskName.name
     }
 
     override fun onResume() {
@@ -63,10 +65,10 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         // Navigate to record detail screen
         Log.d("TaskDetailFragment", "Go to record detail view for ${taskRecord.stamp}")
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // TODO: Handle settings stuff
-        Log.d("TaskDetailFragment", "Settings functionality should go here...")
-        return super.onOptionsItemSelected(item)
-    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        // TODO: Handle settings stuff
+//        Log.d("TaskDetailFragment", "Settings functionality should go here...")
+//        return super.onOptionsItemSelected(item)
+//    }
 }
