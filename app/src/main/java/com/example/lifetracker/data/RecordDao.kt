@@ -12,8 +12,11 @@ interface TaskRecordDao {
     @Delete
     suspend fun delete(taskRecord: TaskRecord)
 
+    @Query("SELECT * FROM TaskRecord ORDER BY stamp DESC")
+    fun getAllRecords(): Flow<List<TaskRecord>>
+
     @Query("SELECT * FROM TaskRecord WHERE template = :name")
-    fun getAllRecords(name: String): Flow<List<TaskRecord>>
+    fun getAllRecordsForTask(name: String): Flow<List<TaskRecord>>
 
     @Query("SELECT * FROM TaskRecord WHERE stamp = :stamp, template = :template LIMIT 1")
     fun getSpecificRecord(stamp: Int, template: String): Flow<TaskRecord>
