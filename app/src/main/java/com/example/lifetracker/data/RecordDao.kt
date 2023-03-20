@@ -12,11 +12,14 @@ interface TaskRecordDao {
     @Delete
     suspend fun delete(taskRecord: TaskRecord)
 
-    @Query("SELECT * FROM TaskRecord")
-    fun getAllTasks(): Flow<List<TaskRecord>>
+    @Query("SELECT * FROM TaskRecord WHERE template = :name")
+    fun getAllRecords(name: String): Flow<List<TaskRecord>>
 
     @Query("SELECT * FROM TaskRecord WHERE stamp = :stamp, template = :template LIMIT 1")
     fun getSpecificRecord(stamp: Int, template: String): Flow<TaskRecord>
+
+    @Query("SELECT * FROM TaskRecord WHERE template = :template LIMIT 1 ORDER BY stamp DESC")
+    fun getLatestRecord(template: String): Flow<TaskRecord>
 
     // TODO: Build "completion" function to tell if a given period has a "successful" record.
 }
