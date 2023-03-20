@@ -17,10 +17,10 @@ class TaskRepository(
 
     // Deletion Functions
     suspend fun deleteTask(template: TaskTemplate) = taskDao.delete(template)
-    suspend fun deleteTask(record: TaskRecord) = recordDao.delete(record)
+    suspend fun deleteRecord(record: TaskRecord) = recordDao.delete(record)
 
     // Fetcher Functions
-    fun getAllTaskTemplates() = taskDao.getAllTasks()
+    fun getAllTasks() = taskDao.getAllTasks()
     fun getAllRecords() = recordDao.getAllRecords()
 
     fun getAllRecordsForTask(name: String) = recordDao.getAllRecordsForTask(name)

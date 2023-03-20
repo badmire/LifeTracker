@@ -41,12 +41,10 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
          * it in the UI.
          */
         viewModel.taskTemplates.observe(viewLifecycleOwner) { taskTemplates ->
-            if (taskTemplates != null) {
-                taskAdapter.updateTaskTemplates(taskTemplates)
-                taskListRV.visibility = View.VISIBLE
-                taskListRV.scrollToPosition(0)
-                // supportActionBar?.title = forecast.city.name
-            }
+            taskAdapter.updateTaskTemplates(taskTemplates)
+            taskListRV.visibility = View.VISIBLE
+            taskListRV.scrollToPosition(0)
+            // supportActionBar?.title = forecast.city.name
         }
 
         /*
@@ -54,55 +52,53 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
          * list is not null, display it in the UI.
          */
         viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
-            if (taskRecords != null) {
-                taskAdapter.updateTaskRecords(taskRecords)
-            }
+            taskAdapter.updateTaskRecords(taskRecords)
         }
 
         /*
          * Set up an observer on the error associated with the current API call.  If the error is
          * not null, display the error that occurred in the UI.
          */
-        viewModel.error.observe(viewLifecycleOwner) { error ->
-            if (error != null) {
-                loadingErrorTV.text = getString(R.string.loading_error, error.message)
-                loadingErrorTV.visibility = View.VISIBLE
-                Log.e(TAG, "Error fetching forecast: ${error.message}")
-            }
-        }
+//        viewModel.error.observe(viewLifecycleOwner) { error ->
+//            if (error != null) {
+//                loadingErrorTV.text = getString(R.string.loading_error, error.message)
+//                loadingErrorTV.visibility = View.VISIBLE
+//                Log.e(TAG, "Error fetching forecast: ${error.message}")
+//            }
+//        }
 
         /*
          * Set up an observer on the loading status of the API query.  Display the correct UI
          * elements based on the current loading status.
          */
-        viewModel.loading.observe(viewLifecycleOwner) { loading ->
-            if (loading) {
-                loadingIndicator.visibility = View.VISIBLE
-                loadingErrorTV.visibility = View.INVISIBLE
-                taskListRV.visibility = View.INVISIBLE
-            } else {
-                loadingIndicator.visibility = View.INVISIBLE
-            }
-        }
+//        viewModel.loading.observe(viewLifecycleOwner) { loading ->
+//            if (loading) {
+//                loadingIndicator.visibility = View.VISIBLE
+//                loadingErrorTV.visibility = View.INVISIBLE
+//                taskListRV.visibility = View.INVISIBLE
+//            } else {
+//                loadingIndicator.visibility = View.INVISIBLE
+//            }
+//        }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        /*
-         * Here, we're reading the current preference values and triggering a data fetching
-         * operation in onResume().  This avoids the need to set up a preference change listener.
-         * It also means that a new API call could potentially be made every time the activity
-         * is resumed.  However, because of the basic caching that's implemented in the
-         * `FiveDayForecastRepository` class, an API call will actually only be made whenever
-         * the city or units setting changes (which is exactly what we want).
-         */
-        // TODO: Settings stuff goes here
-        // val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        // val city = sharedPrefs.getString(getString(R.string.pref_city_key), "Corvallis,OR,US")
-        // val units = sharedPrefs.getString(getString(R.string.pref_units_key), null)
-        viewModel.loadTasks()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//
+//        /*
+//         * Here, we're reading the current preference values and triggering a data fetching
+//         * operation in onResume().  This avoids the need to set up a preference change listener.
+//         * It also means that a new API call could potentially be made every time the activity
+//         * is resumed.  However, because of the basic caching that's implemented in the
+//         * `FiveDayForecastRepository` class, an API call will actually only be made whenever
+//         * the city or units setting changes (which is exactly what we want).
+//         */
+//        // TODO: Settings stuff goes here
+//        // val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+//        // val city = sharedPrefs.getString(getString(R.string.pref_city_key), "Corvallis,OR,US")
+//        // val units = sharedPrefs.getString(getString(R.string.pref_units_key), null)
+//        viewModel.loadTasks()
+//    }
 
     /**
      * This method is passed into the RecyclerView adapter to handle clicks on individual items
