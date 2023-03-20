@@ -16,7 +16,7 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
     private val TAG = "OverviewFragment"
 
     private val viewModel: TaskViewModel by viewModels()
-    private val taskAdapter: TaskAdapter(::onTaskItemClick)
+    private val taskAdapter = TaskAdapter(::onTaskItemClick)
 
     private lateinit var taskListRV: RecyclerView
     private lateinit var loadingErrorTV: TextView

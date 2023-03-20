@@ -16,8 +16,8 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     private val recordDao: TaskRecordDao = AppDB.getInstance(application).recordDao()
     private val repository = TaskRepository(taskDao=taskDao, recordDao=recordDao)
 
-    private val _taskTemplates = MutableLiveData<List<TaskTemplate?>>(null)
-    val taskTemplates: LiveData<List<TaskTemplate?>> = _taskTemplates
+    private val _taskTemplates = MutableLiveData<List<TaskTemplate>>(null)
+    val taskTemplates: LiveData<List<TaskTemplate>> = _taskTemplates
 
     private val _taskRecords = MutableLiveData<List<TaskRecord?>>(null)
     val taskRecords: LiveData<List<TaskRecord?>> = _taskRecords
