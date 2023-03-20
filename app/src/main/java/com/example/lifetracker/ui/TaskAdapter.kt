@@ -26,6 +26,11 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
         notifyDataSetChanged()
     }
 
+    fun getLatestStamp(task: TaskTemplate) : Unit? {
+
+        return null
+    }
+
     override fun getItemCount() = this.taskTemplates.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +40,12 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(this.taskTemplates[position], this.taskRecords[position])
+        for(record in this.taskRecords) {
+            if (record!!.template == this.taskTemplates[position].name) {
+                holder.bind(this.taskTemplates[position], record)
+                break
+            }
+        }
     }
 
     class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)

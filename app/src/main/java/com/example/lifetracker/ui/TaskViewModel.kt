@@ -13,41 +13,30 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     private val recordDao: TaskRecordDao = AppDB.getInstance(application).recordDao()
     private val repository = TaskRepository(taskDao=taskDao, recordDao=recordDao)
 
-    private val _taskTemplates = MutableLiveData<List<TaskTemplate>>(null)
-    val taskTemplates: LiveData<List<TaskTemplate>> = _taskTemplates
-
-    private val _taskRecords = MutableLiveData<List<TaskRecord?>>(null)
-    val taskRecords: LiveData<List<TaskRecord?>> = _taskRecords
-
-    private val _error = MutableLiveData<Throwable?>(null)
-    val error: LiveData<Throwable?> = _error
-
-    private val _loading = MutableLiveData<Boolean>(false)
-    val loading: LiveData<Boolean> = _loading
-
-    fun getAllRecordsForTask(name: String) : LiveData<List<TaskRecord>> {
-        return this.repository.getAllRecordsForTask(name).asLiveData()
-    }
-
-    fun debugHardcode() {
+    fun addTaskTemplate(task: TaskTemplate) {
         viewModelScope.launch {
-            repository.insertNewTask(TaskTemplate("Drink Water", 1, direction = true, 4))
-            repository.insertNewTask(TaskTemplate("Ped Dogs", 4, direction = true, 4))
-            repository.insertNewTask(TaskTemplate("Get Money", 1, direction = true, 1))
-            repository.insertNewTask(TaskTemplate("Fuck Bitches", 1, direction = true, 69))
-            repository.insertNewTask(TaskTemplate("Mood", 1, direction = true))
+            repository.insertNewTask(task)
         }
     }
 
-    fun loadTasks() {
+    fun deleteTaskTemplate(task: TaskTemplate) {
         viewModelScope.launch {
-            _loading.value = true
-            // TODO: Fix this by making it an actual query to an API class
-            //val result = repository.loadTasks()
-            val result = null
-            _loading.value = false
-            //_error.value = result.exceptionOrNull()
-            //_task.value = result.getOrNull()
+            repository.deleteTask(task)
         }
     }
+
+    fun addTaskRecord(record: TaskRecord) {
+        viewModelScope.launch {
+            repository.insertNewRecord(record)
+        }
+    }
+
+    fun deleteTaskRecord(record: TaskRecord) {
+        viewModelScope.launch {
+            repository.deleteRecord(record)
+        }
+    }
+
+    val taskTemplates = repository.getAllTasks().asLiveData()
+    val taskRecords = repository.getAllRecords().asLiveData()
 }
