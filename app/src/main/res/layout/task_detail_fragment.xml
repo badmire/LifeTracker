@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
+    <!--Title-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,12 +14,36 @@
 
     </TextView>
 
-<!--Title-->
-<!--Progress-->
-<!--Previous Entry-->
-<!--I/O-->
-<!---->
+    <!--Progress-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/task_detail_progress_container"
+        >
 
+    </LinearLayout>
 
+    <!--Previous Entry-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/task_detail_previous_entry">
+    </TextView>
+    <!--I/O-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/task_detail_IO"
+        >
 
+    </LinearLayout>
+
+    <!--Previous Records-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
