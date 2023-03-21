@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 // The primary function of this class is to be the generic entrypoint into the DB
 // Also handles all of the coroutines/async operations
 class TaskRepository(
-    private val service: GoogleDriveService,
+//    private val service: GoogleDriveService,
     private val taskDao: TaskTemplateDao,
     private val recordDao: TaskRecordDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO

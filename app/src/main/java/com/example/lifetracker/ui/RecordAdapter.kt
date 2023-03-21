@@ -61,7 +61,7 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
         fun bind(taskRecord: TaskRecord) {
             currentRecord = taskRecord
 
-            val ctx = itemView.context
+//            val ctx = itemView.context
 
             Log.d("RecordAdapter : Bind", "Incoming TaskRecord: ${taskRecord}")
             //Set values here

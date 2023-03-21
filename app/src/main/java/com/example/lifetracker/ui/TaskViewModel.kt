@@ -12,7 +12,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
      */
     private val taskDao: TaskTemplateDao = AppDB.getInstance(application).taskTemplateDao()
     private val recordDao: TaskRecordDao = AppDB.getInstance(application).recordDao()
-    private val repository = TaskRepository(GoogleDriveService.create(), taskDao=taskDao, recordDao=recordDao)
+    private val repository = TaskRepository(taskDao=taskDao, recordDao=recordDao)
 
     fun addTaskTemplate(task: TaskTemplate) {
         viewModelScope.launch {
@@ -94,9 +94,9 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     fun loadTasks() {
         viewModelScope.launch {
             _loading.value = true
-            val result = repository.loadTasks()
+//            val result = repository.loadTasks()
             _loading.value = false
-            _error.value = result.exceptionOrNull()
+//            _error.value = result.exceptionOrNull()
             // _forecast.value = result.getOrNull()
         }
     }
