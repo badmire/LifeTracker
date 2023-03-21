@@ -3,15 +3,11 @@ package com.example.lifetracker.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +15,6 @@ import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
-import org.w3c.dom.Text
 
 class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
 
@@ -31,6 +26,9 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
 
     // Instantiate I/O container container
     private lateinit var IOcontainer: LinearLayout
+
+    // Instantiate Status container container
+    private lateinit var statusContainer: LinearLayout
 
     // Instantiate viewModel and adapter
     private val viewModel: TaskViewModel by viewModels()
@@ -87,11 +85,13 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         // Grab hooks to I/O
         IOcontainer = view.findViewById(R.id.task_detail_IO)
 
+        statusContainer = view.findViewById(R.id.task_detail_progress_container)
+
         // Set Progress and I/O
         when (args.taskTemplate.type) {
             1 -> { // Count to goal
                 val child = LayoutInflater.from(requireContext())
-                    .inflate(R.layout.task_detail_count_up_io,null)
+                    .inflate(R.layout.task_detail_count_up_status,null)
                 if (args.taskTemplate.direction) {
                     child.findViewById<TextView>(R.id.task_detail_count_up_status).text =
                         recordAdapter.taskRecords.size.toString() + " / "
