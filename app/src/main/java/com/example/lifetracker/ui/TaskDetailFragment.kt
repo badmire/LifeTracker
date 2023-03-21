@@ -2,12 +2,12 @@ package com.example.lifetracker.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,6 +59,9 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
 
         Log.d("TaskDetailFragment : onViewCreated","view created, ${args.taskTemplate.name}")
 
+        // Call on fragment to put buttons in action bar
+        setHasOptionsMenu(true)
+
         // Fetch and configure record recycler view
         recordListRV = view.findViewById(R.id.task_detail_record_RV)
         recordListRV.layoutManager = LinearLayoutManager(requireContext())
@@ -73,9 +76,7 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
             recordAdapter.updateRecords(records)
             updateGoals(args.taskTemplate)
             // Set last stamp
-            if (recordAdapter.taskRecords != null) {
-                view.findViewById<TextView>(R.id.task_detail_previous_entry).text = milisecondToString(recordAdapter.taskRecords[0].stamp)
-            }
+            view.findViewById<TextView>(R.id.task_detail_previous_entry).text = milisecondToString(recordAdapter.taskRecords[0].stamp)
             Log.d("TaskDetailFragment : onViewCreated","Count called from adapter post update, ${recordAdapter.itemCount}")
         }
 
@@ -108,19 +109,25 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         }
     }
 
-    // TODO: Make this
-    //override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-    //    menuInflater.inflate(R.menu.activity_forecast_detail, menu)
-    //}
-
     private fun onRecordItemClick(taskRecord: TaskRecord) {
         // Navigate to record detail screen
         Log.d("TaskDetailFragment", "Go to record detail view for ${taskRecord.stamp}")
+        val directions = TaskDetailFragmentDirections.navigateToRecordDetail(taskRecord)
+        findNavController().navigate(directions)
     }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // TODO: Handle settings stuff
-//        Log.d("TaskDetailFragment", "Settings functionality should go here...")
-//        return super.onOptionsItemSelected(item)
-//    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.task_detail_action_bar,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.title == R.string.label_task_settings.toString()) { // To TaskSettings
+            val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
+            findNavController().navigate(directions)
+        } else { // To TaskSummary
+            val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
+            findNavController().navigate(directions)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

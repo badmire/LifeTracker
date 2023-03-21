@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,7 +69,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
         fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?=null) {
             currentTaskTemplate = taskTemplate
 
-            val ctx = itemView.context
+//            val ctx = itemView.context
 
             // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 

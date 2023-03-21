@@ -5,9 +5,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
 
-class SettingsFragment : Fragment(R.layout.settings_fragment){
+class RecordDetailFragment : Fragment(R.layout.record_detail_fragment) {
     // Instantiate viewModel and adapter
     private val viewModel: TaskViewModel by viewModels()
 
-
+    // get hooks for passed args
+    private val args: RecordDetailFragmentArgs by navArgs()
 }

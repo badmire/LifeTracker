@@ -1,0 +1,59 @@
+Index: app/src/main/java/com/example/lifetracker/data/TaskRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.data\r\n\r\nimport com.example.lifetracker.api.GoogleDriveService\r\nimport kotlinx.coroutines.CoroutineDispatcher\r\n\r\n// The primary function of this class is to be the generic entrypoint into the DB\r\n// Also handles all of the coroutines/async operations\r\nclass TaskRepository(\r\n    //private val service: GoogleDriveService,\r\n    //private val ioDispatcher: CoroutineDispatcher,\r\n    private val taskDao: TaskTemplateDao,\r\n    private val recordDao: TaskRecordDao\r\n) {\r\n    // Insertion Functions\r\n    suspend fun insertNewTask(template: TaskTemplate) = taskDao.insert(template)\r\n    suspend fun insertNewRecord(record: TaskRecord) = recordDao.insert(record)\r\n\r\n    // Deletion Functions\r\n    suspend fun deleteTask(template: TaskTemplate) = taskDao.delete(template)\r\n    suspend fun deleteTask(record: TaskRecord) = recordDao.delete(record)\r\n\r\n    // Fetcher Functions\r\n    fun getAllTaskTemplates() = taskDao.getAllTasks()\r\n    fun getAllRecords() = recordDao.getAllTasks()\r\n\r\n    fun getTaskTemplateByName(name: String?) = taskDao.getTaskByName(name)\r\n    fun getSpecificRecord(stamp: Int, template: String) = recordDao.getSpecificRecord(stamp,template)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/data/TaskRepository.kt b/app/src/main/java/com/example/lifetracker/data/TaskRepository.kt
+--- a/app/src/main/java/com/example/lifetracker/data/TaskRepository.kt	(revision 981030cbe9fdfb26235f6e97f794454c7fb3575d)
++++ b/app/src/main/java/com/example/lifetracker/data/TaskRepository.kt	(date 1679190659893)
+@@ -21,7 +21,7 @@
+ 
+     // Fetcher Functions
+     fun getAllTaskTemplates() = taskDao.getAllTasks()
+-    fun getAllRecords() = recordDao.getAllTasks()
++    fun getAllRecords(name: String) = recordDao.getAllRecords(name)
+ 
+     fun getTaskTemplateByName(name: String?) = taskDao.getTaskByName(name)
+     fun getSpecificRecord(stamp: Int, template: String) = recordDao.getSpecificRecord(stamp,template)
+Index: app/src/main/java/com/example/lifetracker/data/RecordDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.data\r\n\r\n\r\nimport androidx.room.*\r\nimport kotlinx.coroutines.flow.Flow\r\n\r\n@Dao\r\ninterface TaskRecordDao {\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    suspend fun insert(taskRecord: TaskRecord)\r\n\r\n    @Delete\r\n    suspend fun delete(taskRecord: TaskRecord)\r\n\r\n    @Query(\"SELECT * FROM TaskRecord\")\r\n    fun getAllTasks(): Flow<List<TaskRecord>>\r\n\r\n    @Query(\"SELECT * FROM TaskRecord WHERE stamp = :stamp, template = :template LIMIT 1\")\r\n    fun getSpecificRecord(stamp: Int, template: String): Flow<TaskRecord>\r\n\r\n    // TODO: Build \"completion\" function to tell if a given period has a \"successful\" record.\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/data/RecordDao.kt b/app/src/main/java/com/example/lifetracker/data/RecordDao.kt
+--- a/app/src/main/java/com/example/lifetracker/data/RecordDao.kt	(revision 981030cbe9fdfb26235f6e97f794454c7fb3575d)
++++ b/app/src/main/java/com/example/lifetracker/data/RecordDao.kt	(date 1679190659900)
+@@ -12,8 +12,8 @@
+     @Delete
+     suspend fun delete(taskRecord: TaskRecord)
+ 
+-    @Query("SELECT * FROM TaskRecord")
+-    fun getAllTasks(): Flow<List<TaskRecord>>
++    @Query("SELECT * FROM TaskRecord WHERE template = :name")
++    fun getAllRecords(name: String): Flow<List<TaskRecord>>
+ 
+     @Query("SELECT * FROM TaskRecord WHERE stamp = :stamp, template = :template LIMIT 1")
+     fun getSpecificRecord(stamp: Int, template: String): Flow<TaskRecord>
+Index: app/src/main/java/com/example/lifetracker/data/Task.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/data/Task.kt b/app/src/main/java/com/example/lifetracker/data/Task.kt
+new file mode 100644
+--- /dev/null	(date 1679190659906)
++++ b/app/src/main/java/com/example/lifetracker/data/Task.kt	(date 1679190659906)
+@@ -0,0 +1,8 @@
++package com.example.lifetracker.data
++
++
++// Packages up TaskTemplate and Records for easy transit around the application
++data class Task(
++    val template: TaskTemplate,
++    val records: List<TaskRecord>
++)
+\ No newline at end of file

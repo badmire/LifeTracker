@@ -8,4 +8,4 @@ data class TaskRecord(
     val template: String,
     val value: Int,
     val note: String? = null,
-)
+) : java.io.Serializable
