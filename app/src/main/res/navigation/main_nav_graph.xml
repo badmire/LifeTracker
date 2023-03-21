@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/overview"
-        android:name="com.example.lifetracker.ui.OverviewFragment"
+        android:name="com.example.lifetracker.ui.fragments.OverviewFragment"
         android:label="@string/label_overview"
         >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/task_detail"
-        android:name="com.example.lifetracker.ui.TaskDetailFragment"
+        android:name="com.example.lifetracker.ui.fragments.TaskDetailFragment"
         android:label="@string/label_overview"
         >
         <argument
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/settings"
-        android:name="com.example.lifetracker.ui.SettingsFragment"
+        android:name="com.example.lifetracker.ui.fragments.SettingsFragment"
         android:label="Settings"
         />
 
