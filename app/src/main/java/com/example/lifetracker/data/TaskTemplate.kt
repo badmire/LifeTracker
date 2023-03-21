@@ -1,4 +1,4 @@
-package com.example.lifetracker.data.containers
+package com.example.lifetracker.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

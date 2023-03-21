@@ -1,7 +1,5 @@
 package com.example.lifetracker.data
 
-import com.example.lifetracker.data.containers.TaskRecord
-import com.example.lifetracker.data.containers.TaskTemplate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

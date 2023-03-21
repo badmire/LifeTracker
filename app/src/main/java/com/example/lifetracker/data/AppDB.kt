@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.lifetracker.data.containers.TaskRecord
-import com.example.lifetracker.data.containers.TaskTemplate
 
 // Database handles TaskTemplate and Record types
 @Database(entities = [TaskTemplate::class, TaskRecord::class],version = 1)

@@ -1,4 +1,4 @@
-package com.example.lifetracker.data.containers
+package com.example.lifetracker.data
 
 import androidx.room.Entity
 
@@ -8,4 +8,4 @@ data class TaskRecord(
     val template: String,
     val value: Int,
     val note: String? = null,
-)
+) : java.io.Serializable

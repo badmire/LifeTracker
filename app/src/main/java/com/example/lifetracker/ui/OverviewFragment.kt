@@ -1,4 +1,4 @@
-package com.example.lifetracker.ui.fragments
+package com.example.lifetracker.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifetracker.data.containers.TaskTemplate
-import com.example.lifetracker.ui.OverviewFragmentDirections
-import com.example.lifetracker.ui.adapters.TaskAdapter
-import com.example.lifetracker.ui.TaskViewModel
+import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
 
 class OverviewFragment : Fragment(R.layout.overview_fragment) {

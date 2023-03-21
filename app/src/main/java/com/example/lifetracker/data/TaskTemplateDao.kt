@@ -1,7 +1,6 @@
 package com.example.lifetracker.data
 
 import androidx.room.*
-import com.example.lifetracker.data.containers.TaskTemplate
 import kotlinx.coroutines.flow.Flow
 
 @Dao

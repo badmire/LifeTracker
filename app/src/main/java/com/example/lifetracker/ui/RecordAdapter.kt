@@ -1,4 +1,4 @@
-package com.example.lifetracker.ui.adapters
+package com.example.lifetracker.ui
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifetracker.data.containers.TaskRecord
+import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
 

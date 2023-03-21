@@ -1,4 +1,4 @@
-package com.example.lifetracker.ui.fragments
+package com.example.lifetracker.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -10,11 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifetracker.data.containers.TaskRecord
-import com.example.lifetracker.data.containers.TaskTemplate
-import com.example.lifetracker.ui.adapters.RecordAdapter
-import com.example.lifetracker.ui.TaskDetailFragmentArgs
-import com.example.lifetracker.ui.TaskViewModel
+import com.example.lifetracker.data.TaskRecord
+import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
 

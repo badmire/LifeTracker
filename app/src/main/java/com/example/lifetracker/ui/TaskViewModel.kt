@@ -2,9 +2,8 @@ package com.example.lifetracker.ui
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.lifetracker.api.GoogleDriveService
 import com.example.lifetracker.data.*
-import com.example.lifetracker.data.containers.TaskRecord
-import com.example.lifetracker.data.containers.TaskTemplate
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application): AndroidViewModel(application) {

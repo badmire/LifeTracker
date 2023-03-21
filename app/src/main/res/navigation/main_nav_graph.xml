@@ -6,8 +6,23 @@
 
     <fragment
         android:id="@+id/overview"
-        android:name="com.example.lifetracker.ui.fragments.OverviewFragment"
+        android:name="com.example.lifetracker.ui.OverviewFragment"
         android:label="@string/label_overview"
+        >
+        <action
+            android:id="@+id/navigate_to_task"
+            app:destination="@+id/task_detail"
+            />
+        <action
+            android:id="@+id/navigate_to_add_task"
+            app:destination="@+id/add_task"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_task"
+        android:name="com.example.lifetracker.ui.AddTaskFragment"
+        android:label="Add Task"
         >
         <action
             android:id="@+id/navigate_to_task"
@@ -17,8 +32,50 @@
 
     <fragment
         android:id="@+id/task_detail"
-        android:name="com.example.lifetracker.ui.fragments.TaskDetailFragment"
+        android:name="com.example.lifetracker.ui.TaskDetailFragment"
         android:label="@string/label_overview"
+        >
+        <argument
+            android:name="task_template"
+            app:argType="com.example.lifetracker.data.TaskTemplate"/>
+        <action
+            android:id="@+id/navigate_to_record_detail"
+            app:destination="@+id/record_detail"
+            />
+        <action
+            android:id="@+id/navigate_to_task_summary"
+            app:destination="@+id/task_summary"
+            />
+        <action
+            android:id="@+id/navigate_to_task_settings"
+            app:destination="@+id/task_settings"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/record_detail"
+        android:name="com.example.lifetracker.ui.RecordDetailFragment"
+        android:label="Record Detail"
+        >
+        <argument
+            android:name="task_record"
+            app:argType="com.example.lifetracker.data.TaskRecord"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/task_summary"
+        android:name="com.example.lifetracker.ui.RecordDetailFragment"
+        android:label="Task Summary"
+        >
+        <argument
+            android:name="task_template"
+            app:argType="com.example.lifetracker.data.TaskTemplate"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/task_settings"
+        android:name="com.example.lifetracker.ui.TaskSettingsFragment"
+        android:label="Task Settings"
         >
         <argument
             android:name="task_template"
@@ -27,8 +84,9 @@
 
     <fragment
         android:id="@+id/settings"
-        android:name="com.example.lifetracker.ui.fragments.SettingsFragment"
+        android:name="com.example.lifetracker.ui.SettingsFragment"
         android:label="Settings"
         />
+
 
 </navigation>
