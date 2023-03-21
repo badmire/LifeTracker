@@ -9,4 +9,6 @@
 
     <!--Nav stuff-->
     <string name="label_overview">Overview</string>
+    <string name="label_task_summary">Task Summary</string>
+    <string name="label_task_settings">Task Settings</string>
 </resources>

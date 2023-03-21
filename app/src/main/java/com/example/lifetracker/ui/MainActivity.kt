@@ -101,10 +101,10 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_main,menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.activity_main,menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
     override fun onSupportNavigateUp(): Boolean {
         val navController =
             findNavController(R.id.nav_host_fragment)

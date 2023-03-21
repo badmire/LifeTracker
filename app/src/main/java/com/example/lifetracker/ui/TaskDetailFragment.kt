@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -111,6 +112,8 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
     private fun onRecordItemClick(taskRecord: TaskRecord) {
         // Navigate to record detail screen
         Log.d("TaskDetailFragment", "Go to record detail view for ${taskRecord.stamp}")
+        val directions = TaskDetailFragmentDirections.navigateToRecordDetail(taskRecord)
+        findNavController().navigate(directions)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -118,7 +121,13 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.d("TaskDetailFragment", "Settings functionality should go here...")
+        if (item.title == R.string.label_task_settings.toString()) { // To TaskSettings
+            val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
+            findNavController().navigate(directions)
+        } else { // To TaskSummary
+            val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
+            findNavController().navigate(directions)
+        }
         return super.onOptionsItemSelected(item)
     }
 }

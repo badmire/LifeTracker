@@ -2,7 +2,11 @@ package com.example.lifetracker.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -31,6 +35,8 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
         taskListRV.setHasFixedSize(true)
         taskListRV.adapter = taskAdapter
 
+        // Call on fragment to put buttons in action bar
+        setHasOptionsMenu(true)
 
         // Set observer for task data. If the taskTemplates list is not null, pass to UI
         viewModel.taskTemplates.observe(viewLifecycleOwner) { taskTemplates ->
@@ -50,5 +56,18 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
         Log.d(TAG, "onTaskItemClick() called, task: $taskTemplate")
         val directions = OverviewFragmentDirections.navigateToTask(taskTemplate)
         findNavController().navigate(directions)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        Log.d(TAG, "${menu.size}")
+        inflater.inflate(R.menu.activity_main,menu)
+    }
+
+    // Define Action Bar behavior
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val directions = OverviewFragmentDirections.navigateToAddTask()
+        Log.d(TAG, "add task puhsed")
+        findNavController().navigate(directions)
+        return super.onOptionsItemSelected(item)
     }
 }

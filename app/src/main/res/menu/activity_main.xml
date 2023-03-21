@@ -2,4 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <!--This is where you set the buttons for the Action Bar for the main activity-->
+    <item
+        android:id="@+id/add_task"
+        android:title="Add Task"
+        android:icon="@drawable/baseline_add_task_24"
+        app:showAsAction="always">
+    </item>
 </menu>
