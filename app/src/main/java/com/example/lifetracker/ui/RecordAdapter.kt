@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskRecord
-import com.example.lifetracker.data.TaskTemplate
+import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
 
 class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
@@ -65,7 +65,7 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
 
             Log.d("RecordAdapter : Bind", "Incoming TaskRecord: ${taskRecord}")
             //Set values here
-            stampTV.text = currentRecord.stamp.toString()
+            stampTV.text = milisecondToString(currentRecord.stamp)
             valueTV.text = currentRecord.value.toString()
             if (currentRecord.note != null) {
                 noteBoolTV.text = "X"
@@ -74,4 +74,5 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
             }
         }
     }
+
 }

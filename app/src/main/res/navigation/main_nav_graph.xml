@@ -21,7 +21,7 @@
         android:label="@string/label_overview"
         >
         <argument
-            android:name="task_name"
+            android:name="task_template"
             app:argType="com.example.lifetracker.data.TaskTemplate"/>
     </fragment>
 

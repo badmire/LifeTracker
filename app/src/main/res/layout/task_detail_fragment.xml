@@ -17,7 +17,7 @@
     <!--Progress-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/task_detail_progress_container"
         >
@@ -27,23 +27,29 @@
     <!--Previous Entry-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/task_detail_previous_entry">
     </TextView>
     <!--I/O-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/task_detail_IO"
         >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/task_detail_IO_TV">
+
+        </TextView>
 
     </LinearLayout>
 
     <!--Previous Records-->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/task_detail_record_RV">
 
     </androidx.recyclerview.widget.RecyclerView>

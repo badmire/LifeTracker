@@ -10,6 +10,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
+import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
 
 class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
@@ -76,7 +77,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
             nameTV.text = taskTemplate.name
             iconTV.text = "+"
             if (taskRecord?.stamp != null) {
-                lastStampTV.text = taskRecord.stamp.toString()
+                lastStampTV.text = milisecondToString(taskRecord.stamp)
             }
 
 
