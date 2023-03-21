@@ -4,5 +4,10 @@
     <item
         android:id="@+id/settings"
         android:title="Settings"
+        android:icon="@drawable/ic_action_settings"
         />
+    <item
+        android:id="@+id/gen_export_button"
+        android:title="Export Data"
+        android:icon="@drawable/ic_action_export"/>
 </menu>

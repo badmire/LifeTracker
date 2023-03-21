@@ -2,14 +2,16 @@ package com.example.lifetracker.data
 
 import com.example.lifetracker.api.GoogleDriveService
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 // The primary function of this class is to be the generic entrypoint into the DB
 // Also handles all of the coroutines/async operations
 class TaskRepository(
-    //private val service: GoogleDriveService,
-    //private val ioDispatcher: CoroutineDispatcher,
+    private val service: GoogleDriveService,
     private val taskDao: TaskTemplateDao,
-    private val recordDao: TaskRecordDao
+    private val recordDao: TaskRecordDao,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     // Insertion Functions
     suspend fun insertNewTask(template: TaskTemplate) = taskDao.insert(template)
@@ -30,4 +32,27 @@ class TaskRepository(
 
     fun getLatestRecord(template_name: String) = recordDao.getLatestRecord(template_name)
 
+    // API stuff
+//    suspend fun loadTasks() : Result<List<TaskTemplate?>> {
+//        withContext(ioDispatcher) {
+//            try {
+//                val response = service.loadTasks(location, units, apiKey)
+//                if (response.isSuccessful) {
+//                    cachedForecast = response.body()  // Cache response forecast
+//
+//                    /*
+//                     * Handle database related stuff.
+//                     */
+//                    val cityBookmark = CityBookmark(location!!, currentTime)
+//                    dao.insert(cityBookmark)
+//
+//                    Result.success(cachedForecast) // Store successful forecast result in Result obj
+//                } else {
+//                    Result.failure(Exception(response.errorBody()?.string()))
+//                }
+//            } catch (e: Exception) {
+//                Result.failure(e)
+//            }
+//        }
+//    }
 }
