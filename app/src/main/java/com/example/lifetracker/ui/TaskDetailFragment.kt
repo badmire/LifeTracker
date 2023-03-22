@@ -130,13 +130,13 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         return when (item.itemId) {
             R.id.task_detail_menu_summary -> {
                 Log.d("TaskDetailFragment", "Inside ${item.title} block")
-                val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
+                val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
                 findNavController().navigate(directions)
                 true
             }
             R.id.task_detail_task_settings -> {
                 Log.d("TaskDetailFragment", "Inside ${item.title} block")
-                val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
+                val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
                 findNavController().navigate(directions)
                 true
             }

@@ -25,7 +25,7 @@ fun genericGraphFunc() {
         size = 4.0
     ) { x = "x"; y = "y" }
 
-    ggsave(fig, "plot.png")
+    // ggsave(fig, "plot.png")
 }
 
 class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
