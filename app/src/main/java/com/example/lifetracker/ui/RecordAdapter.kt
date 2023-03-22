@@ -68,7 +68,7 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
             stampTV.text = milisecondToString(currentRecord.stamp)
 //            valueTV.text = currentRecord.value.toString()
             if (currentRecord.note != null) {
-                noteBoolTV.text = "X"
+                noteBoolTV.text = "📋"
             } else {
                 noteBoolTV.text = " "
             }
