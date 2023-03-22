@@ -23,6 +23,7 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
 
     // Get hook for records
     private lateinit var taskRecords: List<TaskRecord>
+    private lateinit var graphView : GraphView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("TaskSummaryFragment: onViewCreaated", "In this place...")
@@ -31,27 +32,30 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
             .getAllRecordsForTask(args.taskTemplate.name)
             .observe(viewLifecycleOwner) {
                 this.taskRecords = it
+                populateGraph(this.taskRecords)
             }
 
         // TODO: Graphing code from someone else's repo, we could do this better
         //SurfaceView(requireContext())
-        val graph = view.findViewById<GraphView>(R.id.graph)
-        graph.setVisibility(View.VISIBLE)
-
+        graphView = view.findViewById<GraphView>(R.id.graph)
+        graphView.setVisibility(View.INVISIBLE)
+    }
+    fun populateGraph(target: List<TaskRecord>) {
+        val graph = graphView
         try {
             // Initialize an empty array of DataPoints
             val array = arrayOf(DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0),
-                                DataPoint(0.0, 0.0))
+                DataPoint(0.0, 0.0),
+                DataPoint(0.0, 0.0),
+                DataPoint(0.0, 0.0),
+                DataPoint(0.0, 0.0),
+                DataPoint(0.0, 0.0),
+                DataPoint(0.0, 0.0),
+                DataPoint(0.0, 0.0))
 
             // Fill that array with stuff from the taskRecords
             for (arrayIndex in array.indices) {
-                if (taskRecords.size >= arrayIndex) {
+                if (this.taskRecords.size >= arrayIndex) {
                     array[arrayIndex] =
                         DataPoint(arrayIndex.toDouble(), taskRecords[arrayIndex].value.toDouble())
                 }
@@ -78,5 +82,6 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
         } catch (e: IllegalArgumentException) {
             Log.d(tag, "Error: $e")
         }
+        graph.setVisibility(View.VISIBLE)
     }
 }
