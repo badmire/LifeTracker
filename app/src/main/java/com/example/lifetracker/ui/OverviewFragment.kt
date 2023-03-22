@@ -9,11 +9,13 @@ import android.view.View
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
+import kotlinx.coroutines.flow.collect
 
 class OverviewFragment : Fragment(R.layout.overview_fragment) {
     private val TAG = "OverviewFragment"
@@ -50,6 +52,12 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
         viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->
             taskAdapter.updateTaskRecords(taskRecords)
         }
+
+        viewModel.latestRecordsFlow.observe(viewLifecycleOwner) { map ->
+            taskAdapter.updateLatestRecords(map)
+        }
+
+//        viewModel.debugHardcode()
     }
     // Function called when task is clicked on from overview
     private fun onTaskItemClick(taskTemplate: TaskTemplate) {
@@ -65,6 +73,8 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
 
     // Define Action Bar behavior
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+
         val directions = OverviewFragmentDirections.navigateToAddTask()
         Log.d(TAG, "add task puhsed")
         findNavController().navigate(directions)

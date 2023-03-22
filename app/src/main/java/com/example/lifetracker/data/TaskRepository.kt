@@ -1,7 +1,18 @@
 package com.example.lifetracker.data
 
+import android.util.Log
+import androidx.arch.core.util.Function
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 // The primary function of this class is to be the generic entrypoint into the DB
 // Also handles all of the coroutines/async operations
@@ -28,29 +39,15 @@ class TaskRepository(
     fun getTaskTemplateByName(name: String?) = taskDao.getTaskByName(name)
     fun getSpecificRecord(stamp: Int, template: String) = recordDao.getSpecificRecord(stamp,template)
 
-    fun getLatestRecord(template_name: String) = recordDao.getLatestRecord(template_name)
+    fun getLatestRecords() : Flow<Map<String, TaskRecord?>> {
+        val thing = taskDao.getAllTasks().map {taskList ->
+            taskList.associate {
+                withContext(ioDispatcher) {
+                    it.name to recordDao.getLatestRecord(it.name)
+                }
+            }
+        }
+        return thing
+    }
 
-    // API stuff
-//    suspend fun loadTasks() : Result<List<TaskTemplate?>> {
-//        withContext(ioDispatcher) {
-//            try {
-//                val response = service.loadTasks(location, units, apiKey)
-//                if (response.isSuccessful) {
-//                    cachedForecast = response.body()  // Cache response forecast
-//
-//                    /*
-//                     * Handle database related stuff.
-//                     */
-//                    val cityBookmark = CityBookmark(location!!, currentTime)
-//                    dao.insert(cityBookmark)
-//
-//                    Result.success(cachedForecast) // Store successful forecast result in Result obj
-//                } else {
-//                    Result.failure(Exception(response.errorBody()?.string()))
-//                }
-//            } catch (e: Exception) {
-//                Result.failure(e)
-//            }
-//        }
-//    }
 }

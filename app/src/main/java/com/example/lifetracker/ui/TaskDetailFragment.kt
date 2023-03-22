@@ -7,8 +7,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskRecord
@@ -76,7 +78,9 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
             recordAdapter.updateRecords(records)
             updateGoals(args.taskTemplate)
             // Set last stamp
-            view.findViewById<TextView>(R.id.task_detail_previous_entry).text = milisecondToString(recordAdapter.taskRecords[0].stamp)
+            if (recordAdapter.taskRecords.size > 0) {
+                view.findViewById<TextView>(R.id.task_detail_previous_entry).text = milisecondToString(recordAdapter.taskRecords[0].stamp)
+            }
             Log.d("TaskDetailFragment : onViewCreated","Count called from adapter post update, ${recordAdapter.itemCount}")
         }
 
@@ -121,10 +125,13 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("TaskDetailFragment", "${item.title} button pushed")
         if (item.title == R.string.label_task_settings.toString()) { // To TaskSettings
+            Log.d("TaskDetailFragment", "${item.title} button pushed")
             val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
             findNavController().navigate(directions)
-        } else { // To TaskSummary
+        } else if (item.title == R.string.label_task_summary.toString()) { // To TaskSummary
+            Log.d("TaskDetailFragment", "${item.title} button pushed")
             val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
             findNavController().navigate(directions)
         }

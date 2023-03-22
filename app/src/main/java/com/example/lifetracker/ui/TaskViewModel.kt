@@ -1,9 +1,12 @@
 package com.example.lifetracker.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.lifetracker.api.GoogleDriveService
 import com.example.lifetracker.data.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application): AndroidViewModel(application) {
@@ -42,6 +45,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         return this.repository.getAllRecordsForTask(name).asLiveData()
     }
 
+
     fun debugHardcode() {
         viewModelScope.launch {
             repository.insertNewTask(TaskTemplate("Drink Water", 1, direction = true, 4))
@@ -65,6 +69,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
 
     val taskTemplates = repository.getAllTasks().asLiveData()
     val taskRecords = repository.getAllRecords().asLiveData()
+    val latestRecordsFlow = repository.getLatestRecords().asLiveData()
 
     /*
      * The current error for the most recent API query is stored in this private property.  This

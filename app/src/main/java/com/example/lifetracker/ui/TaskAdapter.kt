@@ -16,9 +16,15 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
     var taskTemplates: List<TaskTemplate> = listOf()
     var taskRecords: List<TaskRecord?> = listOf(null)
+    var latestRecords: Map<String,TaskRecord?> = mapOf()
 
     fun updateTaskTemplates(taskTemplates: List<TaskTemplate>) {
         this.taskTemplates = taskTemplates
+        notifyDataSetChanged()
+    }
+
+    fun updateLatestRecords(latestRecords: Map<String,TaskRecord?>) {
+        this.latestRecords = latestRecords
         notifyDataSetChanged()
     }
 
@@ -36,14 +42,10 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(this.taskTemplates[position])
-        Log.d("TaskAdapter : onBindViewHolder","Size of incoming task records: ${this.taskRecords.size}")
-        for(record in this.taskRecords) {
-            if (record!!.template == this.taskTemplates[position].name) {
-                holder.bind(this.taskTemplates[position], record)
-                break
-            }
-        }
+        holder.bind(
+            this.taskTemplates[position],
+            latestRecords.get(taskTemplates[position].name)
+        )
     }
 
     class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)
