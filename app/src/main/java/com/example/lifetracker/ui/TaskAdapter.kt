@@ -99,7 +99,10 @@ class TaskAdapter(
 
             nameTV.text = taskTemplate.name
             if (taskRecord?.stamp != null) {
+                lastStampTV.visibility = View.VISIBLE
                 lastStampTV.text = milisecondToString(taskRecord.stamp)
+            } else {
+                lastStampTV.visibility = View.INVISIBLE
             }
 
             val currentStatus = taskRecords.filter {

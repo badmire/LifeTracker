@@ -9,14 +9,12 @@ import android.view.View
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
-import kotlinx.coroutines.flow.collect
 
 class OverviewFragment : Fragment(R.layout.overview_fragment) {
     private val TAG = "OverviewFragment"
@@ -46,7 +44,6 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
             taskAdapter.updateTaskTemplates(taskTemplates)
             taskListRV.visibility = View.VISIBLE
             taskListRV.scrollToPosition(0)
-            // supportActionBar?.title = forecast.city.name
         }
 
         // Set observer for record data. If the taskTemplates list is not null, pass to UI
