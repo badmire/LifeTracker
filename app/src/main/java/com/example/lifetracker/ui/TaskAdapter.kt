@@ -92,7 +92,7 @@ class TaskAdapter(
         ) {
             currentTaskTemplate = taskTemplate
 
-//            val ctx = itemView.context
+            val ctx = itemView.context
 
             // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
@@ -111,6 +111,12 @@ class TaskAdapter(
                 currentStatus.toString() +
                 " / " +
                 currentTaskTemplate.goal.toString()
+
+            if (currentStatus >= currentTaskTemplate!!.goal!!) {
+                statusTV.setTextColor(ctx.getColor(R.color.figma_teal))
+            } else {
+                statusTV.setTextColor(ctx.getColor(R.color.figma_red))
+            }
 
             Log.d("TaskAdapter : Bind","Name: ${taskTemplate.name} Last Stamp: ${taskRecord?.stamp.toString()}")
             //dateTV.text = ctx.getString(R.string.forecast_date, date)

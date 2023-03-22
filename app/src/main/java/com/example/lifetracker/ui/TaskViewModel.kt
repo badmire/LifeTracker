@@ -52,7 +52,6 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
             repository.insertNewTask(TaskTemplate("Ped Dogs", 4, direction = true, 4))
             repository.insertNewTask(TaskTemplate("Count cash", 1, direction = true, 1))
             repository.insertNewTask(TaskTemplate("Debug (play wack-a-mole)", 1, direction = true, 69))
-            repository.insertNewTask(TaskTemplate("Mood", 1, direction = true))
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis(),"Drink Water",1))
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+10,"Drink Water",1))
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+50,"Drink Water",1))
