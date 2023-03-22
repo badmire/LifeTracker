@@ -6,12 +6,14 @@
         android:id="@+id/task_detail_menu_summary"
         android:icon="@drawable/baseline_auto_graph_24"
         app:showAsAction="always"
+        android:tint="@color/figma_offwhite"
         >
     </item>
     <item
         android:title="@string/label_task_settings"
         android:id="@+id/task_detail_task_settings"
         android:icon="@drawable/ic_action_settings"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        android:tint="@color/figma_offwhite">
     </item>
 </menu>

@@ -7,9 +7,11 @@
         android:id="@+id/settings"
         android:title="Settings"
         android:icon="@drawable/ic_action_settings"
+        android:iconTint="@color/figma_blue"
         />
     <item
         android:id="@+id/gen_export_button"
         android:title="Export Data"
-        android:icon="@drawable/ic_action_export"/>
+        android:icon="@drawable/ic_action_export"
+        android:iconTint="@color/figma_blue"/>
 </menu>
