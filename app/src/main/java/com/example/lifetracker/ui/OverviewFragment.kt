@@ -72,10 +72,15 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
     }
 
     // Define Action Bar behavior
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-////        val directions = OverviewFragmentDirections.navigateToAddTask()
-////        Log.d(TAG, "add task pushed")
-////        findNavController().navigate(directions)
-//        return super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+          R.id.add_task -> {
+              val directions = OverviewFragmentDirections.navigateToAddTask()
+              findNavController().navigate(directions)
+              true
+          }
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+    }
 }

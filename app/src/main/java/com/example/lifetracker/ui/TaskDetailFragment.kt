@@ -136,15 +136,20 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Log.d("TaskDetailFragment", "${item.title} button pushed")
-        if (item.title == R.string.label_task_settings.toString()) { // To TaskSettings
-            Log.d("TaskDetailFragment", "${item.title} button pushed")
-            val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
-            findNavController().navigate(directions)
-        } else if (item.title == R.string.label_task_summary.toString()) { // To TaskSummary
-            Log.d("TaskDetailFragment", "${item.title} button pushed")
-            val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
-            findNavController().navigate(directions)
+        return when (item.itemId) {
+            R.id.task_detail_menu_summary -> {
+                Log.d("TaskDetailFragment", "Inside ${item.title} block")
+                val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
+                findNavController().navigate(directions)
+                true
+            }
+            R.id.task_detail_task_settings -> {
+                Log.d("TaskDetailFragment", "Inside ${item.title} block")
+                val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
+                findNavController().navigate(directions)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 }
