@@ -98,6 +98,12 @@ class TaskAdapter(
             // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
             nameTV.text = taskTemplate.name
+
+
+            // Default to visible
+            lastStampTV.visibility = View.VISIBLE
+
+            // Change visibility based on availability of most recent stamp
             if (taskRecord?.stamp != null) {
                 lastStampTV.visibility = View.VISIBLE
                 lastStampTV.text = milisecondToString(taskRecord.stamp)
