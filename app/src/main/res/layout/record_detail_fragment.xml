@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceHeadline2"
+        android:textColor="@color/figma_blue"
+        android:gravity="center"
+        android:id="@+id/record_detail_title_tv"
+        android:layout_weight="1">
+
+    </TextView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLength="2000"
+        android:maxLines="4"
+        android:minLines="20"
+        android:background="@color/figma_light_blue"
+        android:id="@+id/record_detail_edit_note"
+        android:gravity="top"
+        android:padding="3dp">
+
+    </EditText>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Submit"
+        android:textColor="@color/figma_offwhite"
+        android:id="@+id/record_detail_submit_button"
+        android:layout_weight="1">
+
+    </Button>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Delete Record"
+        android:textColor="@color/figma_red"
+        android:background="@color/figma_red"
+        android:id="@+id/record_detail_delete_button"
+        android:layout_weight="1">
+
+    </Button>
+
+</LinearLayout>

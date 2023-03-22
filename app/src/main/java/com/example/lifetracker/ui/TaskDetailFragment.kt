@@ -120,7 +120,7 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
     private fun onRecordItemClick(taskRecord: TaskRecord) {
         // Navigate to record detail screen
         Log.d("TaskDetailFragment", "Go to record detail view for ${taskRecord.stamp}")
-        val directions = TaskDetailFragmentDirections.navigateToRecordDetail(taskRecord)
+        val directions = TaskDetailFragmentDirections.navigateToRecordDetail(taskRecord,args.taskTemplate)
         findNavController().navigate(directions)
     }
 

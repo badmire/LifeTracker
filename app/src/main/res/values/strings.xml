@@ -19,4 +19,7 @@
     <string name="add_task_submit_button">Submit</string>
 
 
+    <!--Record Detail Stuff-->
+    <string name="record_update_feedback">Record Updated!</string>
+
 </resources>
