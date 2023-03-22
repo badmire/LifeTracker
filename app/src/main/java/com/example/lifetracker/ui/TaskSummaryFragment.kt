@@ -32,30 +32,47 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
                 this.taskRecords = it
             }
 
-        // TODO: Graphing code from someone else's repo, we gotto do this better somehow
+        // TODO: Graphing code from someone else's repo, we could do this better
         //SurfaceView(requireContext())
         val graph = view.findViewById<GraphView>(R.id.graph)
         graph.setVisibility(View.VISIBLE)
 
         try {
-            val series = LineGraphSeries(
-                arrayOf( // on below line we are adding
-                    // each point on our x and y axis.
-                    DataPoint(0.0, 5.0),
-                    DataPoint(1.0, 3.0),
-                    DataPoint(2.0, 4.0),
-                    DataPoint(3.0, 9.0),
-                    DataPoint(4.0, 6.0),
-                    DataPoint(5.0, 3.0),
-                    DataPoint(6.0, 6.0),
-                    DataPoint(7.0, 1.0),
-                    DataPoint(8.0, 2.0),
-                    DataPoint(9.0, 5.0),
-                    DataPoint(10.0, 7.0),
-                    DataPoint(11.0, 2.0),
-                    DataPoint(12.0, 9.0)
-                )
-            )
+            // Initialize an empty array of DataPoints
+            val array = arrayOf(DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0),
+                                DataPoint(0.0, 0.0))
+
+            // Fill that array with stuff from the taskRecords
+            for (arrayIndex in array.indices) {
+                if (taskRecords.size >= arrayIndex) {
+                    array[arrayIndex] =
+                        DataPoint(arrayIndex.toDouble(), taskRecords[arrayIndex].value.toDouble())
+                }
+            }
+
+            // Display
+            val series = LineGraphSeries(array)
+
+//            val series = LineGraphSeries(
+//                arrayOf( // on below line we are adding
+//                    // each point on our x and y axis.
+//                    DataPoint(0.0, eightDaysAgoValue),
+//                    DataPoint(1.0, sevenDaysAgoValue),
+//                    DataPoint(2.0, sixDaysAgoValue),
+//                    DataPoint(3.0, fiveDaysAgoValue),
+//                    DataPoint(4.0, fourDaysAgoValue),
+//                    DataPoint(5.0, threeDaysAgoValue),
+//                    DataPoint(6.0, twoDaysAgoValue),
+//                    DataPoint(7.0, dayAgoValue),
+//                    DataPoint(8.0, todayValue)
+//                )
+//            )
             graph.addSeries(series)
         } catch (e: IllegalArgumentException) {
             Log.d(tag, "Error: $e")
