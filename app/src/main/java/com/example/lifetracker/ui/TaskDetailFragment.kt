@@ -6,9 +6,12 @@ import android.view.*
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +20,7 @@ import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
+import com.google.android.material.navigation.NavigationView
 
 class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
 
@@ -51,6 +55,7 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("TaskDetailFragment : onViewCreated","view created, title: ${args.taskTemplate.name}")
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = args.taskTemplate.name
 
         // Call on fragment to put buttons in action bar
         setHasOptionsMenu(true)
