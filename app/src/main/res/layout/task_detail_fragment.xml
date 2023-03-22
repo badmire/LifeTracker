@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/task_detail_title"
-        >
-
-    </TextView>
+        />
 
     <!--Progress-->
     <LinearLayout
@@ -20,16 +18,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/task_detail_progress_container"
-        >
+        />
 
-    </LinearLayout>
+    <!--Add Record Button-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Record"
+        android:textSize="15sp"
+        android:layout_gravity="center"
+        android:id="@+id/task_detail_add_record_button"
+        />
 
     <!--Previous Entry-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/task_detail_previous_entry">
-    </TextView>
+        android:id="@+id/task_detail_previous_entry"/>
+
     <!--I/O-->
     <LinearLayout
         android:layout_width="match_parent"

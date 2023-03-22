@@ -3,6 +3,7 @@ package com.example.lifetracker.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -110,6 +111,15 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
                 // Finally, add inflated layout to container
                 IOcontainer.addView(child)
             }
+        }
+
+        // Add record button functionality
+        val buttonContainer = view.findViewById<Button>(R.id.task_detail_add_record_button)
+        buttonContainer.setOnClickListener {
+            Log.d("TaskDetailFragment : onAddRecordButtonClick", "Here we are!")
+            // TODO: value and note should probably not be null...
+            val taskRecord = TaskRecord(System.currentTimeMillis(), args.taskTemplate.name, 1, null)
+            viewModel.addTaskRecord(taskRecord)
         }
     }
 

@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                     BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         // Your server's client ID, not your Android client ID.
-                        .setServerClientId()
+                        .setServerClientId("427548799458-34ble2ctnlqtdmnshq2sdbjb56rrf6im.apps.googleusercontent.com")
                         // Only show accounts previously used to sign in.
                         .setFilterByAuthorizedAccounts(true)
                         .build())
