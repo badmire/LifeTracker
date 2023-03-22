@@ -21,8 +21,8 @@ interface TaskRecordDao {
     @Query("SELECT * FROM TaskRecord WHERE stamp = :stamp AND template = :template LIMIT 1")
     fun getSpecificRecord(stamp: Int, template: String): Flow<TaskRecord>
 
-    @Query("SELECT * FROM TaskRecord WHERE template = :template ORDER BY stamp DESC")
-    fun getLatestRecord(template: String): Flow<TaskRecord>
+    @Query("SELECT * FROM TaskRecord WHERE template = :template ORDER BY stamp DESC LIMIT 1")
+    fun getLatestRecord(template: String): TaskRecord
 
     // TODO: Build "completion" function to tell if a given period has a "successful" record.
 }

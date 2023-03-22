@@ -11,7 +11,7 @@ interface TaskTemplateDao {
     @Delete
     suspend fun delete(record: TaskTemplate)
 
-    @Query("SELECT * FROM TaskTemplate")
+    @Query("SELECT * FROM TaskTemplate ORDER BY date_added DESC")
     fun getAllTasks(): Flow<List<TaskTemplate>>
 
     @Query("SELECT * FROM TaskTemplate WHERE name = :name LIMIT 1")

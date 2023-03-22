@@ -11,4 +11,12 @@
     <string name="label_overview">Overview</string>
     <string name="label_task_summary">Task Summary</string>
     <string name="label_task_settings">Task Settings</string>
+
+    <!--Add Task Stuff-->
+    <string name="add_task_name_title">Task Name</string>
+    <string name="add_task_name_default">Start typing here...</string>
+    <string name="add_task_goal_title">Goal</string>
+    <string name="add_task_submit_button">Submit</string>
+
+
 </resources>
