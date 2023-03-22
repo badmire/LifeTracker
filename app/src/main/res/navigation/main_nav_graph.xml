@@ -64,7 +64,7 @@
 
     <fragment
         android:id="@+id/task_summary"
-        android:name="com.example.lifetracker.ui.RecordDetailFragment"
+        android:name="com.example.lifetracker.ui.TaskSummaryFragment"
         android:label="Task Summary"
         >
         <argument
