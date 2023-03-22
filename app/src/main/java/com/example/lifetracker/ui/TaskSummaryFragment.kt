@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import com.example.lifetracker.data.TaskRecord
 import com.example.myapplication.R
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -17,9 +19,18 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
 
     // get hooks for passed args
     private val args: TaskSummaryFragmentArgs by navArgs()
+
+    // Get hook for records
+    private lateinit var taskRecords: List<TaskRecord>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("TaskSummaryFragment: onViewCreaated", "In this place...")
+
+        viewModel
+            .getAllRecordsForTask(args.taskTemplate.name)
+            .observe(viewLifecycleOwner) {
+                this.taskRecords = it
+            }
 
         // TODO: Graphing code from someone else's repo, we gotto do this better somehow
         //SurfaceView(requireContext())
