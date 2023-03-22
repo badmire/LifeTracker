@@ -7,26 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
-//import org.jetbrains.annotations.
-import jetbrains.letsPlot.export.ggsave
-import jetbrains.letsPlot.geom.geomPoint
-import jetbrains.letsPlot.letsPlot
-
-//import
-
-fun genericGraphFunc() {
-    Log.d("TaskSummaryFragment: genericGraphFunc", "In the generic graphing function!")
-    val xs = listOf(0,  0.5, 1, 2)
-    val ys = listOf(0, 0.25, 1, 4)
-    val data = mapOf<String, Any>("x" to xs, "y" to ys)
-
-    val fig = letsPlot(data) + geomPoint(
-        color = "dark-blue",
-        size = 4.0
-    ) { x = "x"; y = "y" }
-
-    // ggsave(fig, "plot.png")
-}
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 
 class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
     // Instantiate viewModel and adapter
@@ -38,6 +21,33 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("TaskSummaryFragment: onViewCreaated", "In this place...")
 
-        genericGraphFunc()
+        // TODO: Graphing code from someone else's repo, we gotto do this better somehow
+        //SurfaceView(requireContext())
+        val graph = view.findViewById<GraphView>(R.id.graph)
+        graph.setVisibility(View.VISIBLE)
+
+        try {
+            val series = LineGraphSeries(
+                arrayOf( // on below line we are adding
+                    // each point on our x and y axis.
+                    DataPoint(0.0, 5.0),
+                    DataPoint(1.0, 3.0),
+                    DataPoint(2.0, 4.0),
+                    DataPoint(3.0, 9.0),
+                    DataPoint(4.0, 6.0),
+                    DataPoint(5.0, 3.0),
+                    DataPoint(6.0, 6.0),
+                    DataPoint(7.0, 1.0),
+                    DataPoint(8.0, 2.0),
+                    DataPoint(9.0, 5.0),
+                    DataPoint(10.0, 7.0),
+                    DataPoint(11.0, 2.0),
+                    DataPoint(12.0, 9.0)
+                )
+            )
+            graph.addSeries(series)
+        } catch (e: IllegalArgumentException) {
+            Log.d(tag, "Error: $e")
+        }
     }
 }

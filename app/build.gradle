@@ -63,15 +63,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'androidx.fragment:fragment-ktx:1.5.5'
 
-    // Plotting stuff
-    implementation ('org.jetbrains.lets-plot:lets-plot-kotlin-jvm:3.0.2') {
-        exclude module: 'portable-jvm'
-        exclude module: 'lets-plot-common'
-        exclude module: 'xml-apis-ext'
-    }
-    implementation ('org.jetbrains.lets-plot:lets-plot-image-export:2.1.0') {
-        exclude module: 'xml-apis-ext'
-    }
-    //implementation 'androidx.lets-plot:lets-plot-kotlin-jvm:3.0.2'
-    //implementation 'androidx.lets-plot:lets-plot-image-export:2.1.0'
+    // Graphing stuff
+    // TODO: Do graphing differently
+    implementation ('com.jjoe64:graphview:4.2.2')
 }
