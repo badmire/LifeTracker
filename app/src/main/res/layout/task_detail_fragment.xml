@@ -10,6 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/task_detail_title"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceHeadline2"
+        android:textColor="@color/figma_blue"
         />
 
     <!--Progress-->
@@ -28,13 +31,20 @@
         android:textSize="15sp"
         android:layout_gravity="center"
         android:id="@+id/task_detail_add_record_button"
+        android:background="@color/figma_teal"
+        android:textColor="@color/figma_offwhite"
+        android:backgroundTint="@color/figma_teal"
         />
 
     <!--Previous Entry-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/task_detail_previous_entry"/>
+        android:id="@+id/task_detail_previous_entry"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textColor="@color/figma_blue"/>
 
     <!--I/O-->
     <LinearLayout
@@ -56,7 +66,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/task_detail_record_RV">
+        android:id="@+id/task_detail_record_RV"
+        android:layout_margin="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

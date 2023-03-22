@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -40,9 +41,7 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         when (template.type) {
             1 -> { // Count to goal
                 view?.findViewById<TextView>(R.id.task_detail_count_up_status)?.text =
-                    recordAdapter.taskRecords.size.toString() + " / "
-                view?.findViewById<TextView>(R.id.task_detail_count_up_goal)?.text =
-                    args.taskTemplate.goal.toString()
+                    recordAdapter.taskRecords.size.toString() + " / " + args.taskTemplate.goal.toString()
             }
         }
     }
@@ -51,7 +50,7 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         // Required magic
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("TaskDetailFragment : onViewCreated","view created, ${args.taskTemplate.name}")
+        Log.d("TaskDetailFragment : onViewCreated","view created, title: ${args.taskTemplate.name}")
 
         // Call on fragment to put buttons in action bar
         setHasOptionsMenu(true)
@@ -71,7 +70,14 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
             updateGoals(args.taskTemplate)
             // Set last stamp
             if (recordAdapter.taskRecords.size > 0) {
-                view.findViewById<TextView>(R.id.task_detail_previous_entry).text = milisecondToString(recordAdapter.taskRecords[0].stamp)
+                view.findViewById<TextView>(R.id.task_detail_previous_entry).text = "Last Entry @ " + milisecondToString(recordAdapter.taskRecords[0].stamp)
+                if (recordAdapter.taskRecords.size >= args.taskTemplate!!.goal!!) {
+                    view.findViewById<TextView>(R.id.task_detail_count_up_status).setTextColor(
+                        getColor(requireContext(),R.color.figma_teal))
+                } else {
+                    view.findViewById<TextView>(R.id.task_detail_count_up_status).setTextColor(
+                        getColor(requireContext(),R.color.figma_red))
+                }
             }
             Log.d("TaskDetailFragment : onViewCreated","Count called from adapter post update, ${recordAdapter.itemCount}")
         }
@@ -89,15 +95,6 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
             1 -> { // Count to goal
                 val child = LayoutInflater.from(requireContext())
                     .inflate(R.layout.task_detail_count_up_status,null)
-                if (args.taskTemplate.direction) {
-                    child.findViewById<TextView>(R.id.task_detail_count_up_status).text =
-                        recordAdapter.taskRecords.size.toString() + " / "
-
-                    child.findViewById<TextView>(R.id.task_detail_count_up_goal).text =
-                        args.taskTemplate.goal.toString()
-                } else {
-
-                }
 
                 // Finally, add inflated layout to container
                 IOcontainer.addView(child)

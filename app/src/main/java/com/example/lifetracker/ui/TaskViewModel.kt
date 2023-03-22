@@ -49,7 +49,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     fun debugHardcode() {
         viewModelScope.launch {
             repository.insertNewTask(TaskTemplate("Drink Water", 1, direction = true, 4))
-            repository.insertNewTask(TaskTemplate("Ped Dogs", 4, direction = true, 4))
+            repository.insertNewTask(TaskTemplate("Pet Dogs", 1, direction = true, 4))
             repository.insertNewTask(TaskTemplate("Count cash", 1, direction = true, 1))
             repository.insertNewTask(TaskTemplate("Debug (play wack-a-mole)", 1, direction = true, 69))
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis(),"Drink Water",1))
