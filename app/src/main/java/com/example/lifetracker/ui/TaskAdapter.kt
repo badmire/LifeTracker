@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,7 +52,7 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)
         : RecyclerView.ViewHolder(itemView) {
         private val nameTV: TextView = itemView.findViewById(R.id.tv_name)
-        private val iconTV: TextView = itemView.findViewById(R.id.tv_icon)
+        private val iconTV: ImageButton = itemView.findViewById(R.id.tv_icon)
         private val lastStampTV: TextView = itemView.findViewById(R.id.tv_time_stamp)
 
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(itemView.context)
@@ -76,7 +77,6 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
             // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
 
             nameTV.text = taskTemplate.name
-            iconTV.text = "+"
             if (taskRecord?.stamp != null) {
                 lastStampTV.text = milisecondToString(taskRecord.stamp)
             }

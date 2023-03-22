@@ -6,5 +6,15 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+
+
+    <color name="figma_blue">#FFFFFFFF</color>
+    <color name="figma_yellow">#FFFFFFFF</color>
+    <color name="figma_offwhite">#FFFFFFFF</color>
+    <color name="figma_teal">#FFFFFFFF</color>
+    <color name="figma_red">#FFFFFFFF</color>
     <color name="white">#FFFFFFFF</color>
+
+
+
 </resources>
