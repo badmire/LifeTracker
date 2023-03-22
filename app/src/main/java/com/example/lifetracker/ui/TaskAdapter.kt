@@ -1,5 +1,6 @@
 package com.example.lifetracker.ui
 
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -102,7 +103,7 @@ class TaskAdapter(
             }
 
             val currentStatus = taskRecords.filter {
-                it?.template == currentTaskTemplate.name
+                it?.template == currentTaskTemplate.name && DateUtils.isToday(it.stamp)
             }.size
 
             Log.d("TaskAdapter : bind","Task: ${currentTaskTemplate.name}, Status: ${currentStatus.toString()}")

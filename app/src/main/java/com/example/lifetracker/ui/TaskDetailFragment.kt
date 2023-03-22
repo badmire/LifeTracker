@@ -1,6 +1,7 @@
 package com.example.lifetracker.ui
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -45,7 +46,7 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         when (template.type) {
             1 -> { // Count to goal
                 view?.findViewById<TextView>(R.id.task_detail_count_up_status)?.text =
-                    recordAdapter.taskRecords.size.toString() + " / " + args.taskTemplate.goal.toString()
+                    recordAdapter.taskRecords.filter{DateUtils.isToday(it.stamp)}.size.toString() + " / " + args.taskTemplate.goal.toString()
             }
         }
     }

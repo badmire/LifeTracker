@@ -61,8 +61,8 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+300,"Debug (play wack-a-mole)",1))
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+400,"Debug (play wack-a-mole)",1))
             repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+500,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+600,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+700,"Debug (play wack-a-mole)",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()-9000000000,"Debug (play wack-a-mole)",1))
+            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()-9050000000,"Debug (play wack-a-mole)",1))
         }
     }
 
