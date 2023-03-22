@@ -13,7 +13,10 @@ import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
 
-class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
+class TaskAdapter(
+    private val navigateToRecordDetailOnClick: (TaskTemplate) -> Unit,
+    private val quickAddOnClick: (TaskTemplate) -> Unit
+)
     : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
     var taskTemplates: List<TaskTemplate> = listOf()
     var taskRecords: List<TaskRecord?> = listOf(null)
@@ -39,21 +42,31 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.task_list_item, parent, false)
-        return ViewHolder(view, onClick)
+        return ViewHolder(
+            view,
+            navigateToRecordDetailOnClick,
+            quickAddOnClick
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(
             this.taskTemplates[position],
+            taskRecords,
             latestRecords.get(taskTemplates[position].name)
         )
     }
 
-    class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)
+    class ViewHolder(
+        itemView: View,
+        private val navigateToRecordDetailOnClick: (TaskTemplate) -> Unit,
+        private val quickAddOnClick: (TaskTemplate) -> Unit
+    )
         : RecyclerView.ViewHolder(itemView) {
         private val nameTV: TextView = itemView.findViewById(R.id.tv_name)
         private val iconTV: ImageButton = itemView.findViewById(R.id.tv_icon)
         private val lastStampTV: TextView = itemView.findViewById(R.id.tv_time_stamp)
+        private val statusTV: TextView = itemView.findViewById(R.id.tv_status)
 
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(itemView.context)
 
@@ -65,11 +78,18 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
          */
         init {
             itemView.setOnClickListener {
-                currentTaskTemplate.let(onClick)
+                currentTaskTemplate.let(navigateToRecordDetailOnClick)
+            }
+            iconTV.setOnClickListener {
+                currentTaskTemplate.let(quickAddOnClick)
             }
         }
 
-        fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?=null) {
+        fun bind(
+            taskTemplate: TaskTemplate,
+            taskRecords: List<TaskRecord?>,
+            taskRecord: TaskRecord?=null
+        ) {
             currentTaskTemplate = taskTemplate
 
 //            val ctx = itemView.context
@@ -81,6 +101,16 @@ class TaskAdapter(private val onClick: (TaskTemplate) -> Unit)
                 lastStampTV.text = milisecondToString(taskRecord.stamp)
             }
 
+            val currentStatus = taskRecords.filter {
+                it?.template == currentTaskTemplate.name
+            }.size
+
+            Log.d("TaskAdapter : bind","Task: ${currentTaskTemplate.name}, Status: ${currentStatus.toString()}")
+
+            statusTV.text =
+                currentStatus.toString() +
+                " / " +
+                currentTaskTemplate.goal.toString()
 
             Log.d("TaskAdapter : Bind","Name: ${taskTemplate.name} Last Stamp: ${taskRecord?.stamp.toString()}")
             //dateTV.text = ctx.getString(R.string.forecast_date, date)

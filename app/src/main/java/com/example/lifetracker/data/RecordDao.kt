@@ -15,7 +15,7 @@ interface TaskRecordDao {
     @Query("SELECT * FROM TaskRecord ORDER BY stamp DESC")
     fun getAllRecords(): Flow<List<TaskRecord>>
 
-    @Query("SELECT * FROM TaskRecord WHERE template = :name")
+    @Query("SELECT * FROM TaskRecord WHERE template = :name ORDER BY stamp DESC")
     fun getAllRecordsForTask(name: String): Flow<List<TaskRecord>>
 
     @Query("SELECT * FROM TaskRecord WHERE stamp = :stamp AND template = :template LIMIT 1")

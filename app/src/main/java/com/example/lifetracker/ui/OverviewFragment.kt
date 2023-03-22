@@ -13,6 +13,7 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
 import kotlinx.coroutines.flow.collect
@@ -22,7 +23,7 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
 
     // ViewModel and adapter containers
     private val viewModel: TaskViewModel by viewModels()
-    private val taskAdapter = TaskAdapter(::onTaskItemClick)
+    private val taskAdapter = TaskAdapter(::onTaskItemClick,::onIconItemClick)
 
     // RecyclerView container
     private lateinit var taskListRV: RecyclerView
@@ -59,11 +60,22 @@ class OverviewFragment : Fragment(R.layout.overview_fragment) {
 
 //        viewModel.debugHardcode()
     }
+
     // Function called when task is clicked on from overview
     private fun onTaskItemClick(taskTemplate: TaskTemplate) {
         Log.d(TAG, "onTaskItemClick() called, task: $taskTemplate")
         val directions = OverviewFragmentDirections.navigateToTask(taskTemplate)
         findNavController().navigate(directions)
+    }
+
+    private fun onIconItemClick(taskTemplate: TaskTemplate) {
+        viewModel.addTaskRecord(
+            TaskRecord(
+                System.currentTimeMillis(),
+                taskTemplate.name,
+                1
+            )
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

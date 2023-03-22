@@ -8,10 +8,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.TaskRecord
@@ -41,17 +39,10 @@ class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
         // Set Progress and I/O
         when (template.type) {
             1 -> { // Count to goal
-                if (template.direction) {
-                    view?.findViewById<TextView>(R.id.task_detail_count_up_status)?.text =
-                        recordAdapter.taskRecords.size.toString() + " / "
-
-                    view?.findViewById<TextView>(R.id.task_detail_count_up_goal)?.text =
-                        args.taskTemplate.goal.toString()
-                } else {
-
-                }
-
-
+                view?.findViewById<TextView>(R.id.task_detail_count_up_status)?.text =
+                    recordAdapter.taskRecords.size.toString() + " / "
+                view?.findViewById<TextView>(R.id.task_detail_count_up_goal)?.text =
+                    args.taskTemplate.goal.toString()
             }
         }
     }
