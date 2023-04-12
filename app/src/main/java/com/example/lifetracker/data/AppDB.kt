@@ -1,12 +1,13 @@
 package com.example.lifetracker.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 // Database handles TaskTemplate and Record types
 @Database(entities = [TaskTemplate::class, TaskRecord::class],version = 1)
+@TypeConverters(DataConverter::class)
 abstract class AppDB: RoomDatabase() {
     // Initialize Dao objects for calling later
     abstract fun recordDao(): TaskRecordDao
@@ -34,5 +35,21 @@ abstract class AppDB: RoomDatabase() {
                 }
             }
         }
+    }
+}
+
+class DataConverter {
+    @TypeConverter
+    fun fromQualitativeList(value: List<String>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
+        return gson.toJson(value, type)
+    }
+
+    @TypeConverter
+    fun toCountryLangList(value: String): List<String> {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
+        return gson.fromJson(value, type)
     }
 }

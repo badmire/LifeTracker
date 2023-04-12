@@ -48,21 +48,13 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
 
     fun debugHardcode() {
         viewModelScope.launch {
-            repository.insertNewTask(TaskTemplate("Drink Water", 1, direction = true, 4))
-            repository.insertNewTask(TaskTemplate("Pet Dogs", 1, direction = true, 4))
-            repository.insertNewTask(TaskTemplate("Count cash", 1, direction = true, 1))
-            repository.insertNewTask(TaskTemplate("Debug (play wack-a-mole)", 1, direction = true, 69))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis(),"Drink Water",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+10,"Drink Water",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+50,"Drink Water",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis(),"Pet Dogs",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+100,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+200,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+300,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+400,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()+500,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()-9000000000,"Debug (play wack-a-mole)",1))
-            repository.insertNewRecord(TaskRecord(System.currentTimeMillis()-9050000000,"Debug (play wack-a-mole)",1))
+            repository.insertNewTask(TaskTemplate(
+                "Get Money",
+                1,
+                1,
+                true,
+                10000,
+            ))
         }
     }
 
