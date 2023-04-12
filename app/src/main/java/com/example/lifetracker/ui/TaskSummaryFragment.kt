@@ -62,22 +62,22 @@ class TaskSummaryFragment : Fragment(R.layout.task_summary_fragment) {
             }
 
             // Display
-            val series = LineGraphSeries(array)
+            // val series = LineGraphSeries(array)
 
-//            val series = LineGraphSeries(
-//                arrayOf( // on below line we are adding
-//                    // each point on our x and y axis.
-//                    DataPoint(0.0, eightDaysAgoValue),
-//                    DataPoint(1.0, sevenDaysAgoValue),
-//                    DataPoint(2.0, sixDaysAgoValue),
-//                    DataPoint(3.0, fiveDaysAgoValue),
-//                    DataPoint(4.0, fourDaysAgoValue),
-//                    DataPoint(5.0, threeDaysAgoValue),
-//                    DataPoint(6.0, twoDaysAgoValue),
-//                    DataPoint(7.0, dayAgoValue),
-//                    DataPoint(8.0, todayValue)
-//                )
-//            )
+            val series = LineGraphSeries(
+                arrayOf( // on below line we are adding
+                    // each point on our x and y axis.
+                    DataPoint(0.0, 0.0),
+                    DataPoint(1.0, 9.0),
+                    DataPoint(2.0, 4.0),
+                    DataPoint(3.0, 12.0),
+                    DataPoint(4.0, 16.0),
+                    DataPoint(5.0, 3.0),
+                    DataPoint(6.0, 10.0),
+                    DataPoint(7.0, 7.0),
+                    DataPoint(8.0, 12.0)
+                )
+            )
             graph.addSeries(series)
         } catch (e: IllegalArgumentException) {
             Log.d(tag, "Error: $e")
