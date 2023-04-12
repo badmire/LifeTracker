@@ -1,0 +1,88 @@
+Index: app/src/main/java/com/example/lifetracker/data/TaskRecord.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.data\r\n\r\nimport androidx.room.Entity\r\n\r\n@Entity(primaryKeys = [\"stamp\",\"template\"])\r\ndata class TaskRecord(\r\n    val stamp: Long,\r\n    val template: String,\r\n    val value: Int,\r\n    val note: String? = null,\r\n)\r\n
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/data/TaskRecord.kt b/app/src/main/java/com/example/lifetracker/data/TaskRecord.kt
+--- a/app/src/main/java/com/example/lifetracker/data/TaskRecord.kt	
++++ b/app/src/main/java/com/example/lifetracker/data/TaskRecord.kt	
+@@ -8,4 +8,4 @@
+     val template: String,
+     val value: Int,
+     val note: String? = null,
+-)
++) : java.io.Serializable
+Index: app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.ui\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.TextView\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.viewModels\r\nimport androidx.navigation.fragment.findNavController\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.lifetracker.data.TaskTemplate\r\nimport com.example.myapplication.R\r\nimport com.google.android.material.progressindicator.CircularProgressIndicator\r\n\r\nclass OverviewFragment : Fragment(R.layout.overview_fragment) {\r\n    private val TAG = \"OverviewFragment\"\r\n\r\n    // ViewModel and adapter containers\r\n    private val viewModel: TaskViewModel by viewModels()\r\n    private val taskAdapter = TaskAdapter(::onTaskItemClick)\r\n\r\n    // RecyclerView container\r\n    private lateinit var taskListRV: RecyclerView\r\n\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        // Set up RecyclerView.\r\n        taskListRV = view.findViewById(R.id.rv_task_list)\r\n        taskListRV.layoutManager = LinearLayoutManager(requireContext())\r\n        taskListRV.setHasFixedSize(true)\r\n        taskListRV.adapter = taskAdapter\r\n\r\n\r\n        // Set observer for task data. If the taskTemplates list is not null, pass to UI\r\n        viewModel.taskTemplates.observe(viewLifecycleOwner) { taskTemplates ->\r\n            taskAdapter.updateTaskTemplates(taskTemplates)\r\n            taskListRV.visibility = View.VISIBLE\r\n            taskListRV.scrollToPosition(0)\r\n            // supportActionBar?.title = forecast.city.name\r\n        }\r\n\r\n        // Set observer for record data. If the taskTemplates list is not null, pass to UI\r\n        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->\r\n            taskAdapter.updateTaskRecords(taskRecords)\r\n        }\r\n    }\r\n    // Function called when task is clicked on from overview\r\n    private fun onTaskItemClick(taskTemplate: TaskTemplate) {\r\n        Log.d(TAG, \"onTaskItemClick() called, task: $taskTemplate\")\r\n        val directions = OverviewFragmentDirections.navigateToTask(taskTemplate)\r\n        findNavController().navigate(directions)\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt b/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt
+--- a/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt	
++++ b/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt	
+@@ -53,4 +53,6 @@
+         val directions = OverviewFragmentDirections.navigateToTask(taskTemplate)
+         findNavController().navigate(directions)
+     }
++
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/lifetracker/ui/TaskDetailFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.ui\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.*\r\nimport android.widget.LinearLayout\r\nimport android.widget.TextView\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.viewModels\r\nimport androidx.navigation.fragment.navArgs\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.lifetracker.data.TaskRecord\r\nimport com.example.lifetracker.data.TaskTemplate\r\nimport com.example.lifetracker.utils.milisecondToString\r\nimport com.example.myapplication.R\r\n\r\nclass TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {\r\n\r\n    // get hooks for passed args\r\n    private val args: TaskDetailFragmentArgs by navArgs()\r\n\r\n    // Instantiate reference for views from layout\r\n    private lateinit var recordListRV: RecyclerView\r\n\r\n    // Instantiate I/O container container\r\n    private lateinit var IOcontainer: LinearLayout\r\n\r\n    // Instantiate Status container container\r\n    private lateinit var statusContainer: LinearLayout\r\n\r\n    // Instantiate viewModel and adapter\r\n    private val viewModel: TaskViewModel by viewModels()\r\n    private val recordAdapter = RecordAdapter(::onRecordItemClick)\r\n\r\n    fun updateGoals(template: TaskTemplate) {\r\n        // Set Progress and I/O\r\n        when (template.type) {\r\n            1 -> { // Count to goal\r\n                if (template.direction) {\r\n                    view?.findViewById<TextView>(R.id.task_detail_count_up_status)?.text =\r\n                        recordAdapter.taskRecords.size.toString() + \" / \"\r\n\r\n                    view?.findViewById<TextView>(R.id.task_detail_count_up_goal)?.text =\r\n                        args.taskTemplate.goal.toString()\r\n                } else {\r\n\r\n                }\r\n\r\n\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        // Required magic\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        Log.d(\"TaskDetailFragment : onViewCreated\",\"view created, ${args.taskTemplate.name}\")\r\n\r\n        // Call on fragment to put buttons in action bar\r\n        setHasOptionsMenu(true)\r\n\r\n        // Fetch and configure record recycler view\r\n        recordListRV = view.findViewById(R.id.task_detail_record_RV)\r\n        recordListRV.layoutManager = LinearLayoutManager(requireContext())\r\n        recordListRV.setHasFixedSize(true)\r\n        recordListRV.adapter = recordAdapter\r\n\r\n        Log.d(\"TaskDetailFragment : onViewCreated\",\"Count called from adapter, ${recordAdapter.itemCount}\")\r\n\r\n        // Set listener for records data\r\n        viewModel.getAllRecordsForTask(args.taskTemplate.name).observe(viewLifecycleOwner) {records ->\r\n            Log.d(\"TaskDetailFragment : onViewCreated\",\"observer found this many things: ${records.size}\")\r\n            recordAdapter.updateRecords(records)\r\n            updateGoals(args.taskTemplate)\r\n            // Set last stamp\r\n            view.findViewById<TextView>(R.id.task_detail_previous_entry).text = milisecondToString(recordAdapter.taskRecords[0].stamp)\r\n            Log.d(\"TaskDetailFragment : onViewCreated\",\"Count called from adapter post update, ${recordAdapter.itemCount}\")\r\n        }\r\n\r\n        // Set Title\r\n        view.findViewById<TextView>(R.id.task_detail_title).text = args.taskTemplate.name\r\n\r\n        // Grab hooks to I/O\r\n        IOcontainer = view.findViewById(R.id.task_detail_IO)\r\n\r\n        statusContainer = view.findViewById(R.id.task_detail_progress_container)\r\n\r\n        // Set Progress and I/O\r\n        when (args.taskTemplate.type) {\r\n            1 -> { // Count to goal\r\n                val child = LayoutInflater.from(requireContext())\r\n                    .inflate(R.layout.task_detail_count_up_status,null)\r\n                if (args.taskTemplate.direction) {\r\n                    child.findViewById<TextView>(R.id.task_detail_count_up_status).text =\r\n                        recordAdapter.taskRecords.size.toString() + \" / \"\r\n\r\n                    child.findViewById<TextView>(R.id.task_detail_count_up_goal).text =\r\n                        args.taskTemplate.goal.toString()\r\n                } else {\r\n\r\n                }\r\n\r\n                // Finally, add inflated layout to container\r\n                IOcontainer.addView(child)\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun onRecordItemClick(taskRecord: TaskRecord) {\r\n        // Navigate to record detail screen\r\n        Log.d(\"TaskDetailFragment\", \"Go to record detail view for ${taskRecord.stamp}\")\r\n    }\r\n\r\n    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {\r\n        inflater.inflate(R.menu.task_detail_action_bar,menu)\r\n    }\r\n\r\n    override fun onOptionsItemSelected(item: MenuItem): Boolean {\r\n        Log.d(\"TaskDetailFragment\", \"Settings functionality should go here...\")\r\n        return super.onOptionsItemSelected(item)\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/ui/TaskDetailFragment.kt b/app/src/main/java/com/example/lifetracker/ui/TaskDetailFragment.kt
+--- a/app/src/main/java/com/example/lifetracker/ui/TaskDetailFragment.kt	
++++ b/app/src/main/java/com/example/lifetracker/ui/TaskDetailFragment.kt	
+@@ -7,6 +7,7 @@
+ import android.widget.TextView
+ import androidx.fragment.app.Fragment
+ import androidx.fragment.app.viewModels
++import androidx.navigation.fragment.findNavController
+ import androidx.navigation.fragment.navArgs
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+@@ -37,13 +38,13 @@
+         // Set Progress and I/O
+         when (template.type) {
+             1 -> { // Count to goal
+-                if (template.direction) {
++                if (template.direction) { // Counting Up
+                     view?.findViewById<TextView>(R.id.task_detail_count_up_status)?.text =
+                         recordAdapter.taskRecords.size.toString() + " / "
+ 
+                     view?.findViewById<TextView>(R.id.task_detail_count_up_goal)?.text =
+                         args.taskTemplate.goal.toString()
+-                } else {
++                } else { // Counting Down
+ 
+                 }
+ 
+@@ -110,7 +111,8 @@
+ 
+     private fun onRecordItemClick(taskRecord: TaskRecord) {
+         // Navigate to record detail screen
+-        Log.d("TaskDetailFragment", "Go to record detail view for ${taskRecord.stamp}")
++        val directions = TaskDetailFragmentDirections.navigateToRecordDetail(taskRecord)
++        findNavController().navigate(directions)
+     }
+ 
+     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+@@ -118,7 +120,13 @@
+     }
+ 
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+-        Log.d("TaskDetailFragment", "Settings functionality should go here...")
++        if (item.title == R.string.label_task_detail_summary.toString()) {
++            val directions = TaskDetailFragmentDirections.navigateToTaskSummary(args.taskTemplate)
++            findNavController().navigate(directions)
++        } else {
++            val directions = TaskDetailFragmentDirections.navigateToTaskSettings(args.taskTemplate)
++            findNavController().navigate(directions)
++        }
+         return super.onOptionsItemSelected(item)
+     }
+ }
+\ No newline at end of file

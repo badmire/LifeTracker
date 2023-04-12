@@ -1,0 +1,40 @@
+Index: app/src/main/java/com/example/lifetracker/ui/TaskAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.ui\r\n\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.preference.PreferenceManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.lifetracker.data.TaskRecord\r\nimport com.example.lifetracker.data.TaskTemplate\r\nimport com.example.lifetracker.utils.milisecondToString\r\nimport com.example.myapplication.R\r\n\r\nclass TaskAdapter(private val onClick: (TaskTemplate) -> Unit)\r\n    : RecyclerView.Adapter<TaskAdapter.ViewHolder>() {\r\n    var taskTemplates: List<TaskTemplate> = listOf()\r\n    var taskRecords: List<TaskRecord?> = listOf(null)\r\n\r\n    fun updateTaskTemplates(taskTemplates: List<TaskTemplate>) {\r\n        this.taskTemplates = taskTemplates\r\n        notifyDataSetChanged()\r\n    }\r\n\r\n    fun updateTaskRecords(taskRecords: List<TaskRecord?>) {\r\n        this.taskRecords = taskRecords\r\n        notifyDataSetChanged()\r\n    }\r\n\r\n    override fun getItemCount() = this.taskTemplates.size\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\r\n        val view = LayoutInflater.from(parent.context)\r\n            .inflate(R.layout.task_list_item, parent, false)\r\n        return ViewHolder(view, onClick)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: ViewHolder, position: Int) {\r\n        holder.bind(this.taskTemplates[position])\r\n        Log.d(\"TaskAdapter : onBindViewHolder\",\"Size of incoming task records: ${this.taskRecords.size}\")\r\n        for(record in this.taskRecords) {\r\n            if (record!!.template == this.taskTemplates[position].name) {\r\n                holder.bind(this.taskTemplates[position], record)\r\n                break\r\n            }\r\n        }\r\n    }\r\n\r\n    class ViewHolder(itemView: View, val onClick: (TaskTemplate) -> Unit)\r\n        : RecyclerView.ViewHolder(itemView) {\r\n        private val nameTV: TextView = itemView.findViewById(R.id.tv_name)\r\n        private val iconTV: TextView = itemView.findViewById(R.id.tv_icon)\r\n        private val lastStampTV: TextView = itemView.findViewById(R.id.tv_time_stamp)\r\n\r\n        private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(itemView.context)\r\n\r\n        private lateinit var currentTaskTemplate: TaskTemplate\r\n\r\n        /*\r\n         * Set up a click listener on this individual ViewHolder.  Call the provided onClick\r\n         * function, passing the forecast item represented by this ViewHolder as an argument.\r\n         */\r\n        init {\r\n            itemView.setOnClickListener {\r\n                currentTaskTemplate.let(onClick)\r\n            }\r\n        }\r\n\r\n        fun bind(taskTemplate: TaskTemplate, taskRecord: TaskRecord?=null) {\r\n            currentTaskTemplate = taskTemplate\r\n\r\n//            val ctx = itemView.context\r\n\r\n            // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)\r\n\r\n            nameTV.text = taskTemplate.name\r\n            iconTV.text = \"+\"\r\n            if (taskRecord?.stamp != null) {\r\n                lastStampTV.text = milisecondToString(taskRecord.stamp)\r\n            }\r\n\r\n\r\n            Log.d(\"TaskAdapter : Bind\",\"Name: ${taskTemplate.name} Last Stamp: ${taskRecord?.stamp.toString()}\")\r\n            //dateTV.text = ctx.getString(R.string.forecast_date, date)\r\n            //timeTV.text = ctx.getString(R.string.forecast_time, date)\r\n            //highTempTV.text = ctx.getString(\r\n            //    R.string.forecast_temp,\r\n            //    forecastPeriod.highTemp,\r\n            //    tempUnitsDisplay\r\n            //)\r\n        }\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/ui/TaskAdapter.kt b/app/src/main/java/com/example/lifetracker/ui/TaskAdapter.kt
+--- a/app/src/main/java/com/example/lifetracker/ui/TaskAdapter.kt	
++++ b/app/src/main/java/com/example/lifetracker/ui/TaskAdapter.kt	
+@@ -4,7 +4,6 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-import android.widget.ImageView
+ import android.widget.TextView
+ import androidx.preference.PreferenceManager
+ import androidx.recyclerview.widget.RecyclerView
+Index: app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.lifetracker.ui\r\n\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.View\r\nimport android.widget.TextView\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.viewModels\r\nimport androidx.navigation.fragment.findNavController\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.lifetracker.data.TaskTemplate\r\nimport com.example.myapplication.R\r\nimport com.google.android.material.progressindicator.CircularProgressIndicator\r\n\r\nclass OverviewFragment : Fragment(R.layout.overview_fragment) {\r\n    private val TAG = \"OverviewFragment\"\r\n\r\n    // ViewModel and adapter containers\r\n    private val viewModel: TaskViewModel by viewModels()\r\n    private val taskAdapter = TaskAdapter(::onTaskItemClick)\r\n\r\n    // RecyclerView container\r\n    private lateinit var taskListRV: RecyclerView\r\n\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        // Set up RecyclerView.\r\n        taskListRV = view.findViewById(R.id.rv_task_list)\r\n        taskListRV.layoutManager = LinearLayoutManager(requireContext())\r\n        taskListRV.setHasFixedSize(true)\r\n        taskListRV.adapter = taskAdapter\r\n\r\n\r\n        // Set observer for task data. If the taskTemplates list is not null, pass to UI\r\n        viewModel.taskTemplates.observe(viewLifecycleOwner) { taskTemplates ->\r\n            taskAdapter.updateTaskTemplates(taskTemplates)\r\n            taskListRV.visibility = View.VISIBLE\r\n            taskListRV.scrollToPosition(0)\r\n            // supportActionBar?.title = forecast.city.name\r\n        }\r\n\r\n        // Set observer for record data. If the taskTemplates list is not null, pass to UI\r\n        viewModel.taskRecords.observe(viewLifecycleOwner) { taskRecords ->\r\n            taskAdapter.updateTaskRecords(taskRecords)\r\n        }\r\n    }\r\n    // Function called when task is clicked on from overview\r\n    private fun onTaskItemClick(taskTemplate: TaskTemplate) {\r\n        Log.d(TAG, \"onTaskItemClick() called, task: $taskTemplate\")\r\n        val directions = OverviewFragmentDirections.navigateToTask(taskTemplate)\r\n        findNavController().navigate(directions)\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt b/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt
+--- a/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt	
++++ b/app/src/main/java/com/example/lifetracker/ui/OverviewFragment.kt	
+@@ -3,7 +3,6 @@
+ import android.os.Bundle
+ import android.util.Log
+ import android.view.View
+-import android.widget.TextView
+ import androidx.fragment.app.Fragment
+ import androidx.fragment.app.viewModels
+ import androidx.navigation.fragment.findNavController
+@@ -11,7 +10,6 @@
+ import androidx.recyclerview.widget.RecyclerView
+ import com.example.lifetracker.data.TaskTemplate
+ import com.example.myapplication.R
+-import com.google.android.material.progressindicator.CircularProgressIndicator
+ 
+ class OverviewFragment : Fragment(R.layout.overview_fragment) {
+     private val TAG = "OverviewFragment"
