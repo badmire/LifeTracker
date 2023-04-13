@@ -27,6 +27,12 @@
         android:spinnerMode="dropdown"
         android:id="@+id/task_type_spinner"/>
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:id="@+id/task_period_spinner"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

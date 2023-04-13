@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <!-- Goal -->
-    <TextView
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_task_goal_title"
-        android:hint="@string/add_task_goal_title">
-    </TextView>
-
-    <TextView
+        android:layout_height="match_parent"
+        android:drawSelectorOnTop="false"
+        android:id="@+id/add_qual_list"
+        />
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="3">
-    </TextView>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:id="@+id/add_task_goal_edit"/>
+        android:layout_height="match_parent"
+        android:id="@+id/add_qual_item_btn"
+        />
 
 </LinearLayout>
