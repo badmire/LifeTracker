@@ -7,7 +7,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 
-class qualitativeOptionsAdapter : RecyclerView.Adapter<qualitativeOptionsAdapter.ViewHolder>() {
+class QualitativeOptionsAdapter : RecyclerView.Adapter<QualitativeOptionsAdapter.ViewHolder>() {
     // Holder for options
     var curOptions: MutableList<String> = mutableListOf()
 

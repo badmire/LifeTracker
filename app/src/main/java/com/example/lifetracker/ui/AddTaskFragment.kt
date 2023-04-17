@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lifetracker.data.Task
 import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.showToast
@@ -34,7 +36,8 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
     private lateinit var goalET : EditText
     private lateinit var directionToggle : SwitchMaterial
     private lateinit var optionsBtn : Button
-    private lateinit var optionsLV : ListView
+    private lateinit var qualRV : RecyclerView
+    private val qualAdapter = QualitativeOptionsAdapter()
 
     // Containers for task creation
     private var optionsList : MutableList<String> = mutableListOf()
@@ -164,19 +167,14 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                                     null
                                 )
                         )
-                        // Wire up button and list
-                        // https://stackoverflow.com/questions/4540754/how-do-you-dynamically-add-elements-to-a-listview-on-android
-                        var options_aa = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_list_item_1,
-                            optionsList
-                        )
-                        optionsLV = taskSpecificContainer.findViewById(R.id.add_qual_list)
-                        optionsLV.adapter = options_aa
+
+                        qualRV = taskSpecificContainer.findViewById(R.id.add_task_qual_rv)
+                        qualRV.layoutManager = LinearLayoutManager(requireContext())
+                        qualRV.adapter = qualAdapter
 
                         optionsBtn = taskSpecificContainer.findViewById(R.id.add_qual_item_btn)
                         optionsBtn.setOnClickListener {
-                            options_aa.add("Thing!")
+                            showToast(requireContext(),"BUTTON PUSHED")
                         }
                     }
                     4 -> {
