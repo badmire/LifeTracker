@@ -91,51 +91,44 @@ class TaskAdapter(
             taskRecords: List<TaskRecord?>,
             taskRecord: TaskRecord?=null
         ) {
-            currentTaskTemplate = taskTemplate
+            when (taskTemplate.type) {
+                1 -> {
+                    currentTaskTemplate = taskTemplate
+                    val ctx = itemView.context
 
-            val ctx = itemView.context
+                    nameTV.text = taskTemplate.name
+                    // Default to visible
+                    lastStampTV.visibility = View.VISIBLE
 
-            // val units = sharedPrefs.getString(ctx.getString(R.string.pref_units_key), null)
+                    // Change visibility based on availability of most recent stamp
+                    if (taskRecord?.stamp != null) {
+                        lastStampTV.visibility = View.VISIBLE
+                        lastStampTV.text = milisecondToString(taskRecord.stamp)
+                    } else {
+                        lastStampTV.visibility = View.INVISIBLE
+                    }
 
-            nameTV.text = taskTemplate.name
+                    val currentStatus = taskRecords.filter {
+                        it?.template == currentTaskTemplate.name && DateUtils.isToday(it.stamp)
+                    }.size
 
+                    Log.d("TaskAdapter : bind","Task: ${currentTaskTemplate.name}, Status: ${currentStatus.toString()}")
 
-            // Default to visible
-            lastStampTV.visibility = View.VISIBLE
+                    statusTV.text =
+                        currentStatus.toString() +
+                                " / " +
+                                currentTaskTemplate.goal.toString()
 
-            // Change visibility based on availability of most recent stamp
-            if (taskRecord?.stamp != null) {
-                lastStampTV.visibility = View.VISIBLE
-                lastStampTV.text = milisecondToString(taskRecord.stamp)
-            } else {
-                lastStampTV.visibility = View.INVISIBLE
+                    if (currentStatus >= currentTaskTemplate!!.goal!!) {
+                        statusTV.setTextColor(ctx.getColor(R.color.figma_teal))
+                    } else {
+                        statusTV.setTextColor(ctx.getColor(R.color.figma_red))
+                    }
+                }
+                3 -> {}
+                4 -> {}
+                5 -> {}
             }
-
-            val currentStatus = taskRecords.filter {
-                it?.template == currentTaskTemplate.name && DateUtils.isToday(it.stamp)
-            }.size
-
-            Log.d("TaskAdapter : bind","Task: ${currentTaskTemplate.name}, Status: ${currentStatus.toString()}")
-
-            statusTV.text =
-                currentStatus.toString() +
-                " / " +
-                currentTaskTemplate.goal.toString()
-
-            if (currentStatus >= currentTaskTemplate!!.goal!!) {
-                statusTV.setTextColor(ctx.getColor(R.color.figma_teal))
-            } else {
-                statusTV.setTextColor(ctx.getColor(R.color.figma_red))
-            }
-
-            Log.d("TaskAdapter : Bind","Name: ${taskTemplate.name} Last Stamp: ${taskRecord?.stamp.toString()}")
-            //dateTV.text = ctx.getString(R.string.forecast_date, date)
-            //timeTV.text = ctx.getString(R.string.forecast_time, date)
-            //highTempTV.text = ctx.getString(
-            //    R.string.forecast_temp,
-            //    forecastPeriod.highTemp,
-            //    tempUnitsDisplay
-            //)
         }
     }
 }

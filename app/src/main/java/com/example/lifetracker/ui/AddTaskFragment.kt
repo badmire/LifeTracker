@@ -143,7 +143,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
 
                 // Inflate layout for different task types
                 when (taskTypeCode) {
-                    1 -> {
+                    1 -> { // Count up
                         taskSpecificContainer.addView(
                             LayoutInflater
                                 .from(requireContext())
@@ -156,8 +156,10 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                         goalET = view!!.findViewById(R.id.add_task_goal_edit)
                         // Wire up direction toggle
                         directionToggle = view.findViewById(R.id.add_task_direction_toggle)
+                        // Wire submit button
+                        submitBtn.setOnClickListener {addNewCountUp()}
                     }
-                    3 -> {
+                    3 -> { // Qualitative
                         Log.d("Add Task","The qualitative branch has been called")
                         taskSpecificContainer.addView(
                             LayoutInflater
@@ -172,12 +174,15 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                         qualRV.layoutManager = LinearLayoutManager(requireContext())
                         qualRV.adapter = qualAdapter
 
+
+
                         optionsBtn = taskSpecificContainer.findViewById(R.id.add_qual_item_btn)
                         optionsBtn.setOnClickListener {
-                            showToast(requireContext(),"BUTTON PUSHED")
+                            qualAdapter.addOption()
                         }
+                        submitBtn.setOnClickListener {addNewQualitative()}
                     }
-                    4 -> {
+                    4 -> { // Range
                         taskSpecificContainer.addView(
                             LayoutInflater
                                 .from(requireContext())
@@ -186,8 +191,9 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                                     null
                                 )
                         )
+                        submitBtn.setOnClickListener {addNewRange()}
                     }
-                    5 -> {
+                    5 -> { // Boolean
                         taskSpecificContainer.addView(
                             LayoutInflater
                                 .from(requireContext())
@@ -196,6 +202,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                                     null
                                 )
                         )
+                        submitBtn.setOnClickListener {addNewBoolean()}
                     }
                     else -> {
 
@@ -204,41 +211,84 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                 showToast(requireContext(),"${task_spinner.selectedItem.toString()} Selected")
             }
         }
-
-        submitBtn.setOnClickListener {
-            Log.d("AddTaskFragment","submit button : value of toggle: ${directionToggle.isChecked}")
-            if ( // Validate all fields before task creation
-                goalET.text.toString() != "" && // Check for no goal set
-                nameET.text.toString() != "" && // Check for no name set
-                taskTypeCode != 0 // Check task type is valid
-            ) {
-                Log.d("AddTaskFragment","submit button : value in goalET: ${goalET.text.toString().toInt()}")
+    }
 
 
-                // Build new task based on form
-                val new_task = TaskTemplate(
-                    nameET.text.toString(),
-                    taskTypeCode,
-                    periodInDays,
-                    directionToggle.isChecked,
-                    goalET.text.toString().toInt(),
-                )
-
-                // Give feedback
-                showToast(requireContext(),"Task type is: ${task_spinner.selectedItem.toString()}")
-                // Add task to database
-                viewModel.addTaskTemplate(new_task)
-                // Construct directions back to overview and navigate
-                val directions = AddTaskFragmentDirections.navigateToOverview()
-                findNavController().navigate(directions)
-
-            } else { // Give feedback on error, do nothing
-
+    fun addNewQualitative() {
+        Log.d("Add Task Fragment","addNewQualitative called")
+        Log.d("Add Task Fragment","Name: ${nameET.text.toString()}")
+        Log.d("Add Task Fragment","List size: ${optionsList.size}")
+        Log.d("Add Task Fragment","Type code: ${taskTypeCode}")
+        if ( // Validate all fields before task creation
+            nameET.text.toString() != "" && // Check for no name set
+            qualAdapter.curOptions.size > 1 && // Check for at least 1 option
+            taskTypeCode == 3 // Check task type is valid
+        ) {
+            Log.d("Add Task Fragment","Inside if block")
+            // Harvest text values for options
+            var finalOptions = mutableListOf<String>()
+            for (i in qualAdapter.curOptions.indices) {
+                val curView = qualRV.getChildAt(i)
+                finalOptions.add(curView.findViewById<EditText>(R.id.add_option_et).text.toString())
             }
 
 
+            // Build new task based on form
+            val new_task = TaskTemplate(
+                name = nameET.text.toString(),
+                type = taskTypeCode,
+                period = periodInDays,
+                options = finalOptions
+            )
+
+            // Add task to database
+            viewModel.addTaskTemplate(new_task)
+            // Construct directions back to overview and navigate
+            val directions = AddTaskFragmentDirections.navigateToOverview()
+            findNavController().navigate(directions)
+
+        } else { // Give feedback on error, do nothing
 
         }
     }
 
+    fun addNewCountUp() {
+        Log.d("AddTaskFragment","submit button : value of toggle: ${directionToggle.isChecked}")
+        if ( // Validate all fields before task creation
+            goalET.text.toString() != "" && // Check for no goal set
+            nameET.text.toString() != "" && // Check for no name set
+            taskTypeCode != 0 // Check task type is valid
+        ) {
+            Log.d("AddTaskFragment","submit button : value in goalET: ${goalET.text.toString().toInt()}")
+
+
+            // Build new task based on form
+            val new_task = TaskTemplate(
+                nameET.text.toString(),
+                taskTypeCode,
+                periodInDays,
+                directionToggle.isChecked,
+                goalET.text.toString().toInt(),
+            )
+
+            // Give feedback
+            showToast(requireContext(),"Task type is: ${task_spinner.selectedItem.toString()}")
+            // Add task to database
+            viewModel.addTaskTemplate(new_task)
+            // Construct directions back to overview and navigate
+            val directions = AddTaskFragmentDirections.navigateToOverview()
+            findNavController().navigate(directions)
+
+        } else { // Give feedback on error, do nothing
+
+        }
+    }
+
+    fun addNewBoolean() {
+
+    }
+
+    fun addNewRange() {
+
+    }
 }

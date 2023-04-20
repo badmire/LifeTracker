@@ -4,12 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 
 class QualitativeOptionsAdapter : RecyclerView.Adapter<QualitativeOptionsAdapter.ViewHolder>() {
     // Holder for options
     var curOptions: MutableList<String> = mutableListOf()
+
+    fun addOption() {
+        this.curOptions.add("") // Add blank string as holder for later value
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount() = this.curOptions.size
 
@@ -24,19 +31,20 @@ class QualitativeOptionsAdapter : RecyclerView.Adapter<QualitativeOptionsAdapter
         holder.itemView.findViewById<Button>(R.id.option_del_btn)
             .setOnClickListener {
                 curOptions.remove(this.curOptions[position])
+                notifyDataSetChanged()
             }
-        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        private lateinit var curOption: String
+        private lateinit var curVal: String
 
         init {
+
         }
 
-        fun bind(curOption: String) {
-            this.curOption = curOption
+        fun bind(valContainer : String) {
+            this.curVal = valContainer
         }
     }
 }
