@@ -16,7 +16,7 @@ import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.myapplication.R
 
-class OverviewFragment : Fragment(R.layout.overview_fragment) {
+class OverviewFragment : Fragment(R.layout.activity_task_overview) {
     private val TAG = "OverviewFragment"
 
     // ViewModel and adapter containers

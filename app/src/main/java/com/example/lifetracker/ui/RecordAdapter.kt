@@ -28,7 +28,7 @@ class RecordAdapter(private val onClick: (TaskRecord) -> Unit)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Log.d("RecordAdapter : onCreateViewHolder", "Size of taskRecords on creation: ${taskRecords.size}")
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.record_card_item,parent,false)
+            .inflate(R.layout.record_detail_record_card_item,parent,false)
         return ViewHolder(view,onClick)
     }
 

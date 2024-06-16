@@ -16,7 +16,7 @@ import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
 import com.google.android.material.snackbar.Snackbar
 
-class RecordDetailFragment : Fragment(R.layout.record_detail_fragment) {
+class RecordDetailFragment : Fragment(R.layout.activity_record_detail) {
     // Instantiate viewModel and adapter
     private val viewModel: TaskViewModel by viewModels()
 

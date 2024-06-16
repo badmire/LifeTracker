@@ -7,12 +7,10 @@ import android.view.*
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,9 +19,8 @@ import com.example.lifetracker.data.TaskRecord
 import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.milisecondToString
 import com.example.myapplication.R
-import com.google.android.material.navigation.NavigationView
 
-class TaskDetailFragment : Fragment(R.layout.task_detail_fragment) {
+class TaskDetailFragment : Fragment(R.layout.activity_task_detail) {
 
     // get hooks for passed args
     private val args: TaskDetailFragmentArgs by navArgs()

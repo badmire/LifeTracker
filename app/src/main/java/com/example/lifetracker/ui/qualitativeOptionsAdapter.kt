@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 
@@ -22,7 +20,7 @@ class QualitativeOptionsAdapter : RecyclerView.Adapter<QualitativeOptionsAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.qual_option_card,parent,false)
+            .inflate(R.layout.layout_qualitative_qual_option_card,parent,false)
         return ViewHolder(view)
     }
 

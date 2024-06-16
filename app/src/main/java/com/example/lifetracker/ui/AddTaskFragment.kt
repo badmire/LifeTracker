@@ -5,20 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifetracker.data.Task
 import com.example.lifetracker.data.TaskTemplate
 import com.example.lifetracker.utils.showToast
 import com.example.myapplication.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 
-class AddTaskFragment : Fragment(R.layout.add_task_fragment){
+class AddTaskFragment : Fragment(R.layout.activity_add_task){
     // Instantiate viewModel and adapter
     private val viewModel: TaskViewModel by viewModels()
 
@@ -71,13 +68,13 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
         // Initialize adapters
         var task_aa = ArrayAdapter(
             requireContext(), // Pass in main activity context
-            R.layout.spinner_text_item, // Layout to be inflated for each item
+            R.layout.add_task_spinner_text_item, // Layout to be inflated for each item
             task_types // List of items
         )
 
         var period_aa = ArrayAdapter(
             requireContext(),
-            R.layout.spinner_text_item,
+            R.layout.add_task_spinner_text_item,
             periods
         )
 
@@ -99,7 +96,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
             LayoutInflater
                 .from(requireContext())
                 .inflate(
-                    R.layout.add_task_countup,
+                    R.layout.add_task_layout_countup,
                     null
                 )
         )
@@ -148,7 +145,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                             LayoutInflater
                                 .from(requireContext())
                                 .inflate(
-                                    R.layout.add_task_countup,
+                                    R.layout.add_task_layout_countup,
                                     null
                                 )
                             )
@@ -165,7 +162,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                             LayoutInflater
                                 .from(requireContext())
                                 .inflate(
-                                    R.layout.add_task_qualitative,
+                                    R.layout.add_task_layout_qualitative,
                                     null
                                 )
                         )
@@ -187,7 +184,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                             LayoutInflater
                                 .from(requireContext())
                                 .inflate(
-                                    R.layout.add_task_range,
+                                    R.layout.add_task_layout_range,
                                     null
                                 )
                         )
@@ -198,7 +195,7 @@ class AddTaskFragment : Fragment(R.layout.add_task_fragment){
                             LayoutInflater
                                 .from(requireContext())
                                 .inflate(
-                                    R.layout.add_task_boolean,
+                                    R.layout.add_task_layout_boolean,
                                     null
                                 )
                         )
